@@ -1,0 +1,732 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Digital Image Process," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Pyramid Projection 对于全景应用的提升原型Equirectangular投影的文件大小众所周知，在全景应用中，用的比较多的无非是Equirectangular（等距圆柱投影）以及CubeMap（立方体投影）。前者是360°图像或视频的直接数字化存储格式，还有我们地球的投影也是利用了Equirectangular的投影方式。Equirectangular的投影方式就如下图所示。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pyramid Projection 对于全景应用的提升">
+<meta property="og:url" content="http://yoursite.com/pyramid-projection/index.html">
+<meta property="og:site_name" content="米诺的博客">
+<meta property="og:description" content="Pyramid Projection 对于全景应用的提升原型Equirectangular投影的文件大小众所周知，在全景应用中，用的比较多的无非是Equirectangular（等距圆柱投影）以及CubeMap（立方体投影）。前者是360°图像或视频的直接数字化存储格式，还有我们地球的投影也是利用了Equirectangular的投影方式。Equirectangular的投影方式就如下图所示。">
+<meta property="og:image" content="http://yoursite.com/img/pyramid-projection/equirectangular1.png">
+<meta property="og:image" content="http://yoursite.com/img/pyramid-projection/cubemap1.png">
+<meta property="og:image" content="http://yoursite.com/img/pyramid-projection/pyramid1.jpg">
+<meta property="og:image" content="http://yoursite.com/img/pyramid-projection/output.jpg">
+<meta property="og:updated_time" content="2016-08-06T12:59:30.133Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pyramid Projection 对于全景应用的提升">
+<meta name="twitter:description" content="Pyramid Projection 对于全景应用的提升原型Equirectangular投影的文件大小众所周知，在全景应用中，用的比较多的无非是Equirectangular（等距圆柱投影）以及CubeMap（立方体投影）。前者是360°图像或视频的直接数字化存储格式，还有我们地球的投影也是利用了Equirectangular的投影方式。Equirectangular的投影方式就如下图所示。">
+<meta name="twitter:image" content="http://yoursite.com/img/pyramid-projection/equirectangular1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6313394359244948000,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/pyramid-projection/"/>
+
+  <title> Pyramid Projection 对于全景应用的提升 | 米诺的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">米诺的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Pyramid Projection 对于全景应用的提升
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-06T20:53:13+08:00" content="2016-08-06">
+              2016-08-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Tech/" itemprop="url" rel="index">
+                    <span itemprop="name">Tech</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Tech/Digital-Image-Process/" itemprop="url" rel="index">
+                    <span itemprop="name">Digital Image Process</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/pyramid-projection/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="pyramid-projection/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Pyramid-Projection-对于全景应用的提升"><a href="#Pyramid-Projection-对于全景应用的提升" class="headerlink" title="Pyramid Projection 对于全景应用的提升"></a>Pyramid Projection 对于全景应用的提升</h1><h3 id="原型Equirectangular投影的文件大小"><a href="#原型Equirectangular投影的文件大小" class="headerlink" title="原型Equirectangular投影的文件大小"></a>原型Equirectangular投影的文件大小</h3><p>众所周知，在全景应用中，用的比较多的无非是Equirectangular（等距圆柱投影）以及CubeMap（立方体投影）。<br>前者是360°图像或视频的直接数字化存储格式，还有我们地球的投影也是利用了Equirectangular的投影方式。<br>Equirectangular的投影方式就如下图所示。</p>
+<p><img src="/img/pyramid-projection/equirectangular1.png" alt=""></p>
+<p>其中它的文件像素比为2：1，图像上方4：0.5的图像是顶部的投影，图像下方4：0.5的图像是底部的投影，中间4：1的四个1：1正方形是前后左右四个方向的投影。<br>以面的像素值来计算的话可以看到文件大小为4：2</p>
+<h3 id="CubeMap图像的文件大小"><a href="#CubeMap图像的文件大小" class="headerlink" title="CubeMap图像的文件大小"></a>CubeMap图像的文件大小</h3><p>而Facebook早前提出了一种新的格式用于储存全景投影，就是CubeMap，如下图所示。</p>
+<p><img src="/img/pyramid-projection/cubemap1.png" alt=""></p>
+<p>对于CubeMap图像来说它也是由六个方向的投影组成的图像，其中从上至下从左至右分别是右左上下前后六个面，宽高像素比是3：2。<br>可以很明显的看到文件大小是有所减少了，因为CubeMap图像将Equirectangular图像顶部和底部的两个面重复的像素去除了，文件大小相对Equirectangular减少了25%。<br>所以在服务器上储存的时候，就可以减少一定的空间了。</p>
+<h3 id="Pyramid-Projection图像"><a href="#Pyramid-Projection图像" class="headerlink" title="Pyramid Projection图像"></a>Pyramid Projection图像</h3><p>现在，Facebook又提出了新的图像投影方式<a href="https://code.facebook.com/posts/1126354007399553/next-generation-video-encoding-techniques-for-360-video-and-vr/" target="_blank" rel="external">Pyramid Projection</a>，它能够减少80%的文件大小。<br>简单来说，它是利用了用户可能会聚集某个时间段只关注一个角度的图像，另一个时间段关注另一个角度，那么只需要根据用户观看的方向设定椎体的底部为正向即可。<br>根据这一个工程性的方法，我们先静态制作几个不同方向的金字塔投影，再根据用户视角动态读取不同文件。<br>这样做的好处是什么呢？锥形投影图像的像素大小小了很多！因为只关注一个面，所以锥形投影图像的大小只有Equirectangular投影图像大小的20%，所以GPU在做纹理渲染时，时间成本大幅下降！用户再也不用因为GPU设备性能差而等待视频缓冲了！</p>
+<p>这里值得注意的一点是，四个角落的三角形投影时不可能是等腰直角三角形，否则无法构成椎体，需要进行在垂直方向上扩展成等边三角形，至于如何扩展下面会详细说明。</p>
+<p><img src="/img/pyramid-projection/pyramid1.jpg" alt=""></p>
+<ul>
+<li>Pyramid Projection 实现</li>
+</ul>
+<p>简单来说，思路是这样的。利用坐标变换使锥形投影平面展开图上的点和椎体模型一一对应，这里要用到坐标系转换的线性代数方法，用变换矩阵乘上点的坐标得到新坐标系下的坐标。<br>求出每个平面上的点对应的三维空间坐标后，再利用椎体上的点到球心的垂直方向夹角和水平方向夹角，求出椎体到球体的转换，这个方法和Equirectangular转换到CubeMap的方法是一样的。</p>
+<p><a href="https://github.com/MinoGump/360ImagePyramidProjection" target="_blank" rel="external">我的代码</a></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># This Function create an pyramid projection image and set the color </span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">convertBack</span><span class="params">(imgIn,imgOut)</span>:</span></div><div class="line">    <span class="comment">#...</span></div><div class="line"></div><div class="line"><span class="comment"># This Function convert the XY coordinate of pyramid image to XYZ coordinate of pyramid model </span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">outImgToXYZ</span><span class="params">(i,j,face,halfOutSize,toward)</span>:</span></div><div class="line">    <span class="comment">#...</span></div><div class="line"></div><div class="line"><span class="comment"># This Function calculate the roate matrix of each plane in pyramid image</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">convertCoordinate</span><span class="params">(x, y, z, sequence)</span>:</span></div><div class="line">    <span class="comment">#...</span></div></pre></td></tr></table></figure>
+<p>输出的结果是这样的</p>
+<p><img src="/img/pyramid-projection/output.jpg" alt=""></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Digital-Image-Process/" rel="tag">#Digital Image Process</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/transform-image/" rel="next" title="360立体图像的转换">
+                <i class="fa fa-chevron-left"></i> 360立体图像的转换
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="pyramid-projection/"
+     data-title="Pyramid Projection 对于全景应用的提升"
+     data-content=""
+     data-url="http://yoursite.com/pyramid-projection/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="pyramid-projection/"
+           data-title="Pyramid Projection 对于全景应用的提升" data-url="http://yoursite.com/pyramid-projection/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/avatar.jpg"
+               alt="Mino Gump" />
+          <p class="site-author-name" itemprop="name">Mino Gump</p>
+          <p class="site-description motion-element" itemprop="description">千里之行，始于足下</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/blogmrg" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zh-cn.facebook.com/people/%E7%94%98%E9%93%AD%E4%B9%90/100011770406458" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/MinoGump" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://leetcode.com/" title="LeetCode" target="_blank">LeetCode</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://stackoverflow.com/" title="stack overflow" target="_blank">stack overflow</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pyramid-Projection-对于全景应用的提升"><span class="nav-number">1.</span> <span class="nav-text">Pyramid Projection 对于全景应用的提升</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原型Equirectangular投影的文件大小"><span class="nav-number">1.0.1.</span> <span class="nav-text">原型Equirectangular投影的文件大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CubeMap图像的文件大小"><span class="nav-number">1.0.2.</span> <span class="nav-text">CubeMap图像的文件大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pyramid-Projection图像"><span class="nav-number">1.0.3.</span> <span class="nav-text">Pyramid Projection图像</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mino Gump</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"minogump"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

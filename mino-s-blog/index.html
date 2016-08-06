@@ -1,0 +1,786 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Github,Hexo," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="用Hexo搭建在Github上的博客众所周知Github有一个免费的Page空间，因此我们可以用来搭建一个blog，我们使用Hexo框架，这个框架使用node.js编写，能够实现blog的标签和分类功能，另外还有许多主题和拓展插件
+Install Hexo
+Hexo由node.js编写，所以我们要安装node.js$ sudo apt-get install nodejs
+
+官方介绍安装Hexo要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo+Github搭建博客">
+<meta property="og:url" content="http://yoursite.com/mino-s-blog/index.html">
+<meta property="og:site_name" content="米诺的博客">
+<meta property="og:description" content="用Hexo搭建在Github上的博客众所周知Github有一个免费的Page空间，因此我们可以用来搭建一个blog，我们使用Hexo框架，这个框架使用node.js编写，能够实现blog的标签和分类功能，另外还有许多主题和拓展插件
+Install Hexo
+Hexo由node.js编写，所以我们要安装node.js$ sudo apt-get install nodejs
+
+官方介绍安装Hexo要">
+<meta property="og:image" content="http://yoursite.com/img/mino-s-blog/hexo1.png">
+<meta property="og:image" content="http://yoursite.com/img/mino-s-blog/hexo2.png">
+<meta property="og:updated_time" content="2016-08-02T02:11:18.798Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo+Github搭建博客">
+<meta name="twitter:description" content="用Hexo搭建在Github上的博客众所周知Github有一个免费的Page空间，因此我们可以用来搭建一个blog，我们使用Hexo框架，这个框架使用node.js编写，能够实现blog的标签和分类功能，另外还有许多主题和拓展插件
+Install Hexo
+Hexo由node.js编写，所以我们要安装node.js$ sudo apt-get install nodejs
+
+官方介绍安装Hexo要">
+<meta name="twitter:image" content="http://yoursite.com/img/mino-s-blog/hexo1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6313394359244948000,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/mino-s-blog/"/>
+
+  <title> Hexo+Github搭建博客 | 米诺的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">米诺的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hexo+Github搭建博客
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-09-23T00:38:44+08:00" content="2015-09-23">
+              2015-09-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Tech/" itemprop="url" rel="index">
+                    <span itemprop="name">Tech</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Tech/Github/" itemprop="url" rel="index">
+                    <span itemprop="name">Github</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Tech/Github/Hexo/" itemprop="url" rel="index">
+                    <span itemprop="name">Hexo</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/mino-s-blog/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="mino-s-blog/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="用Hexo搭建在Github上的博客"><a href="#用Hexo搭建在Github上的博客" class="headerlink" title="用Hexo搭建在Github上的博客"></a>用Hexo搭建在Github上的博客</h1><p>众所周知Github有一个免费的Page空间，因此我们可以用来搭建一个blog，我们使用<a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>框架，这个框架使用node.js编写，能够实现blog的标签和分类功能，另外还有许多主题和拓展插件</p>
+<h3 id="Install-Hexo"><a href="#Install-Hexo" class="headerlink" title="Install Hexo"></a>Install Hexo</h3><ul>
+<li><p>Hexo由node.js编写，所以我们要安装node.js<br><code>$ sudo apt-get install nodejs</code></p>
+</li>
+<li><p>官方介绍安装Hexo要通过npm，安装npm，然后可以用npm安装Hexo<br><code>$ sudo apt-get install npm</code><br><code>$ sudo npm install hexo-cli -g</code></p>
+</li>
+<li><p>完成后在bash下直接输入hexo即可出现用法提示<br><img src="/img/mino-s-blog/hexo1.png" alt="photo1"></p>
+</li>
+</ul>
+<h3 id="Create-a-Repository"><a href="#Create-a-Repository" class="headerlink" title="Create a Repository"></a>Create a Repository</h3><ul>
+<li>创建一个github的仓库，名字为 <github username="">.github.io</github></li>
+</ul>
+<h3 id="Initialize-Hexo"><a href="#Initialize-Hexo" class="headerlink" title="Initialize Hexo"></a>Initialize Hexo</h3><ul>
+<li><p>在一个根目录下初始化一个Hexo框架<br><code>$ hexo init MyBlog</code><br><code>$ cd MyBlog</code><br><code>$ sudo npm install</code><br><code>$ sudo npm install hexo-deployer-git --save</code><br><code>$ sudo npm install hexo-server --save</code><br><code>$ npm install hexo-generator-index --save</code><br><code>$ npm install hexo-generator-archive --save</code><br><code>$ npm install hexo-generator-category --save</code><br><code>$ npm install hexo-generator-tag --save</code><br><code>$ npm install hexo-renderer-marked@0.2 --save</code><br><code>$ npm install hexo-renderer-stylus@0.2 --save</code><br><code>$ npm install hexo-generator-feed@1 --save</code><br><code>$ npm install hexo-generator-sitemap@1 --save</code></p>
+</li>
+<li><p>好了把所有需要的插件和hexo工具安装完毕后就会在node_modules文件夹下多了很多包<br><img src="/img/mino-s-blog/hexo2.png" alt="photo2"></p>
+</li>
+<li><p>编写_config.yml文件，其中设置</p>
+</li>
+</ul>
+<blockquote>
+<p>title: 米诺的博客 \<br>subtitle: 千里之行，始于足下 \<br>description: \<br>author: Mino Gump \<br>language: zh-CN \<br>timezone:</p>
+<p>url: <a href="http://MinoGump.github.io" target="_blank" rel="external">http://MinoGump.github.io</a> \<br>root: / \<br>permalink: :year/:month/:day/:title.html \<br>permalink_defaults:</p>
+<p> type: git \<br> repo: git@github.com:MinoGump/MinoGump.github.io.git \<br> branch: master</p>
+</blockquote>
+<h3 id="Write-an-Article"><a href="#Write-an-Article" class="headerlink" title="Write an Article"></a>Write an Article</h3><ul>
+<li><p>新建一篇博客<br><code>$ hexo new &#39;article-name&#39;</code></p>
+</li>
+<li><p>出现一个md文件，编辑里面的内容后提交</p>
+</li>
+<li>可以使用图片，将图片放在source文件夹下即可引用</li>
+<li>markdown - hexo 语法请参考<a href="http://widatama.github.io/hexo-jade-barebone/markdown-syntax/" target="_blank" rel="external">这个链接</a></li>
+</ul>
+<h3 id="Run-a-Blog"><a href="#Run-a-Blog" class="headerlink" title="Run a Blog"></a>Run a Blog</h3><ul>
+<li>输入以下命令，在本地localhost:4000上运行<br><code>$ hexo generate</code><br><code>$ hexo server</code></li>
+</ul>
+<h3 id="Deploy-the-Blog-to-Github"><a href="#Deploy-the-Blog-to-Github" class="headerlink" title="Deploy the Blog to Github"></a>Deploy the Blog to Github</h3><ul>
+<li><p>在博客根目录下添加一个本地git仓库，把除了public的所有东西添加到远程仓库中，并放在hexo分支中，用来存储这个博客的配置<br><code>$ git init</code><br><code>$ git checkout -b hexo</code><br><code>$ git add remote origin git@github.com:???/???.github.io.git</code><br><code>$ git add ...</code><br><code>$ git commit ...</code><br><code>$ git push origin hexo:hexo</code></p>
+</li>
+<li><p>最后再使用deploy命令即可上传到github page中<br><code>$ hexo deploy</code></p>
+</li>
+</ul>
+<hr>
+<h3 id="Referrence"><a href="#Referrence" class="headerlink" title="Referrence"></a>Referrence</h3><ul>
+<li><a href="http://widatama.github.io/hexo-jade-barebone/markdown-syntax/" target="_blank" rel="external">http://widatama.github.io/hexo-jade-barebone/markdown-syntax/</a></li>
+<li><a href="http://www.flysnow.org/2015/03/10/github-page-with-hexo.html" target="_blank" rel="external">http://www.flysnow.org/2015/03/10/github-page-with-hexo.html</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Github/" rel="tag">#Github</a>
+          
+            <a href="/tags/Hexo/" rel="tag">#Hexo</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/github/" rel="prev" title="Github学习心得">
+                Github学习心得 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="mino-s-blog/"
+     data-title="Hexo+Github搭建博客"
+     data-content=""
+     data-url="http://yoursite.com/mino-s-blog/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="mino-s-blog/"
+           data-title="Hexo+Github搭建博客" data-url="http://yoursite.com/mino-s-blog/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/avatar.jpg"
+               alt="Mino Gump" />
+          <p class="site-author-name" itemprop="name">Mino Gump</p>
+          <p class="site-description motion-element" itemprop="description">千里之行，始于足下</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/blogmrg" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zh-cn.facebook.com/people/%E7%94%98%E9%93%AD%E4%B9%90/100011770406458" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/MinoGump" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://leetcode.com/" title="LeetCode" target="_blank">LeetCode</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://stackoverflow.com/" title="stack overflow" target="_blank">stack overflow</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#用Hexo搭建在Github上的博客"><span class="nav-number">1.</span> <span class="nav-text">用Hexo搭建在Github上的博客</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Install-Hexo"><span class="nav-number">1.0.1.</span> <span class="nav-text">Install Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-Repository"><span class="nav-number">1.0.2.</span> <span class="nav-text">Create a Repository</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Initialize-Hexo"><span class="nav-number">1.0.3.</span> <span class="nav-text">Initialize Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Write-an-Article"><span class="nav-number">1.0.4.</span> <span class="nav-text">Write an Article</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-a-Blog"><span class="nav-number">1.0.5.</span> <span class="nav-text">Run a Blog</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-the-Blog-to-Github"><span class="nav-number">1.0.6.</span> <span class="nav-text">Deploy the Blog to Github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Referrence"><span class="nav-number">1.0.7.</span> <span class="nav-text">Referrence</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mino Gump</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"minogump"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

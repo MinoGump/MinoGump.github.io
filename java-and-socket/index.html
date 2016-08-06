@@ -1,0 +1,813 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java,Socket," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Java Socket 编程1. 异常异常与错误的区别错误(error)指程序运行时遇到的硬件或操作系统的错误，比如 OutOfMemoryError、ThreadDeath等。这些异常发生时，Java 虚拟机(JVM)一般会选择线程终止。异常(exception)指在硬件和操作系统正常时，程序遇到的运行错，程序本身可以处理的异常。
+Java的异常处理Java的异常就像是bug，需要程序员在代码中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Socket 编程">
+<meta property="og:url" content="http://yoursite.com/java-and-socket/index.html">
+<meta property="og:site_name" content="米诺的博客">
+<meta property="og:description" content="Java Socket 编程1. 异常异常与错误的区别错误(error)指程序运行时遇到的硬件或操作系统的错误，比如 OutOfMemoryError、ThreadDeath等。这些异常发生时，Java 虚拟机(JVM)一般会选择线程终止。异常(exception)指在硬件和操作系统正常时，程序遇到的运行错，程序本身可以处理的异常。
+Java的异常处理Java的异常就像是bug，需要程序员在代码中">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/OutOfMoney.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/AccountException.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/Runable.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/RunableThread.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/SubclassThread.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/SubclassThreadResult.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/AccountSerializable.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/AccountSerializableResult.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/AccountReflect.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/AccountReflectResult.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/AccountRemoteReflectServer.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/AccountRemoteReflectClient.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/AccountRemoteReflectResult_Server.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/AccountRemoteReflectResult_Client.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/ClientRemoteReflect.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/Server.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/Client.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/ServiceProxy.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/ProxyClient.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/TCPServer.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/TCPClient.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/TCPResult_Server.png">
+<meta property="og:image" content="http://yoursite.com/img/java_socket/TCPResult_Client.png">
+<meta property="og:updated_time" content="2016-08-01T15:47:17.094Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java Socket 编程">
+<meta name="twitter:description" content="Java Socket 编程1. 异常异常与错误的区别错误(error)指程序运行时遇到的硬件或操作系统的错误，比如 OutOfMemoryError、ThreadDeath等。这些异常发生时，Java 虚拟机(JVM)一般会选择线程终止。异常(exception)指在硬件和操作系统正常时，程序遇到的运行错，程序本身可以处理的异常。
+Java的异常处理Java的异常就像是bug，需要程序员在代码中">
+<meta name="twitter:image" content="http://yoursite.com/img/java_socket/OutOfMoney.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6313394359244948000,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/java-and-socket/"/>
+
+  <title> Java Socket 编程 | 米诺的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">米诺的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java Socket 编程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-12-08T19:11:39+08:00" content="2015-12-08">
+              2015-12-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Tech/" itemprop="url" rel="index">
+                    <span itemprop="name">Tech</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Tech/Web/" itemprop="url" rel="index">
+                    <span itemprop="name">Web</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Tech/Web/Socket/" itemprop="url" rel="index">
+                    <span itemprop="name">Socket</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/java-and-socket/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="java-and-socket/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Java-Socket-编程"><a href="#Java-Socket-编程" class="headerlink" title="Java Socket 编程"></a>Java Socket 编程</h1><h3 id="1-异常"><a href="#1-异常" class="headerlink" title="1. 异常"></a>1. 异常</h3><p><strong>异常与错误的区别</strong><br>错误(error)指程序运行时遇到的硬件或操作系统的错误，比如 OutOfMemoryError、ThreadDeath等。这些异常发生时，Java 虚拟机(JVM)一般会选择线程终止。异常(exception)指在硬件和操作系统正常时，程序遇到的运行错，程序本身可以处理的异常。</p>
+<p><strong>Java的异常处理</strong><br>Java的异常就像是bug，需要程序员在代码中用if式的判断throw出异常、进行处理。Java的异常类继承了Exception的基类。下面的代码中演示了OutOfMoney异常类的实现：<br><img src="/img/java_socket/OutOfMoney.png" alt="OutOfMoney" title="OutOfMoney"></p>
+<p><strong>代码运行结果</strong><br><img src="/img/java_socket/AccountException.png" alt="AccountException" title="AccountException"></p>
+<hr>
+<h3 id="2-Java多线程"><a href="#2-Java多线程" class="headerlink" title="2. Java多线程"></a>2. Java多线程</h3><ul>
+<li><h4 id="1-应用-Runnable-创建线程"><a href="#1-应用-Runnable-创建线程" class="headerlink" title="(1) 应用 Runnable 创建线程"></a>(1) 应用 Runnable 创建线程</h4></li>
+</ul>
+<p>Runnable是一个简单的接口,其中定义了所有线程类必须实现的抽象方法run()。实现Runnable接口的线程类可节约Java程序中宝贵的单继承指标。例如，一个Applet程序常常以这种方式实现多线程,因为Applet本身需要继承javax.swing.JApplet类。完成一个实现了 Runnable接口的线程类后，可创建该线程类的一个实例，然后再以该实例为参数创建Thread类的一个实例，最后调用该Thread实例的start()方法，从而创建了一个新线程。</p>
+<p><strong>代码</strong><br><img src="/img/java_socket/Runable.png" alt="Runable" title="Runable"></p>
+<p><strong>代码运行结果</strong><br><img src="/img/java_socket/RunableThread.png" alt="RunableThread" title="RunableThread"></p>
+<p><strong>代码分析</strong><br>在该主函数中，首先新建了一个Counter类，交给Thread类的实例thread执行，然后主函数结束。由结果观察出因为主函数这个线程不耗时，因此先执行这个线程，最后再执行含有Counter的线程。</p>
+<ul>
+<li><h4 id="2-继承-Thread-类"><a href="#2-继承-Thread-类" class="headerlink" title="(2) 继承 Thread 类"></a>(2) 继承 Thread 类</h4></li>
+</ul>
+<p>继承 Thread 类的线程类可用更简单的代码完成同样的事情。在利用继承 Thread 类的线程类创建一个新线程时，可直接创建该线程类的一个实例。</p>
+<p><strong>代码</strong><br><img src="/img/java_socket/SubclassThread.png" alt="SubclassThread" title="SubclassThread"></p>
+<p><strong>代码运行结果</strong><br><img src="/img/java_socket/SubclassThreadResult.png" alt="SubclassThreadResult" title="SubclassThreadResult"></p>
+<p><strong>代码分析</strong><br>在该主函数中，首先新建了一个SubclassThread类，该类继承了Thread类。由结果观察出因为主函数这个线程不耗时，因此先执行这个线程，最后再执行含有SubclassThread的线程。</p>
+<hr>
+<h3 id="3-Java序列化"><a href="#3-Java序列化" class="headerlink" title="3. Java序列化"></a>3. Java序列化</h3><p>在分布式计算环境下，进程间是通过相互之间传递消息实现远程通信，消息中包含有各种类型的数据。而无论是何种类型的数据，都是以二进制序列的形式在网络上传送。这就需要发送进程将对象转换为字节序列，才能在网络上传送；接收进程则需要把字节序列再恢复为对象。在进程间消息通信过程中，把Java对象转换为字节序列的过程称为对象的序列化。把字节序列恢复为Java对象的过程称为对象的反序列化。由此，可以看出，对象的序列化主要有两种用途：将对象的字节序列持久化，保存在文件系统中；在网络上传送对象的字节序列。</p>
+<p><strong>代码</strong><br><img src="/img/java_socket/AccountSerializable.png" alt="AccountSerialiable" title="AccountSerialiable"></p>
+<p><strong>代码运行结果</strong><br><img src="/img/java_socket/AccountSerializableResult.png" alt="AccountSerialiableResult" title="AccountSerialiableResult"></p>
+<p><strong>代码分析</strong><br>在该代码中，主函数新建了一个二进制流文件，然后进行写Object操作，将两个Account写入到该文件中，最后从该文件中按顺序读出来，获得Account的信息。</p>
+<p>注意Java语言中要求只有实现了java.io.Serializable接口的类的对象才能被序列化及<br>反序列化。JDK类库中的有些类(如String类、包装类、Date类等)都实现了Serializable接口。 对象的序列化包括以下步骤：创建一个对象输出流，它可以包装一个其他类型的输出流，比如文件输出流；通过对象输出流写对象。对象的反序列化包括以下步骤：创建一个对象输入流，它可以包装一个其他类型的输入流，比如文件输入流；通过对象输入流读取对象。另外，在对象的序列化和反序列化过程当中，必须注意的是：为了能读出正确的数据，必须保证对象输出流的写对象的顺序与对象输入流读对象的顺序是一致的。</p>
+<hr>
+<h3 id="4-Java-语言的反射机制"><a href="#4-Java-语言的反射机制" class="headerlink" title="4. Java 语言的反射机制"></a>4. Java 语言的反射机制</h3><ul>
+<li><h4 id="1-Java-语言的反射机制原理"><a href="#1-Java-语言的反射机制原理" class="headerlink" title="(1) Java 语言的反射机制原理"></a>(1) Java 语言的反射机制原理</h4></li>
+</ul>
+<p>通常将程序运行时，可以程序结构或变量类型的语言为动态语言。从这个观点看，perl、phthon、ruby 是动态语言，C++、JAVA、C#不是动态语言。Java 语言的反射(Reflection)机制则可以在程序运行时判断任意一个对象所属的类，构造任意一个类的对象，判断任意一个类所具有的成员变量和方法，调用任意一个对象的方法，或者生成动态代理。</p>
+<p>在 JDK 中，主要由 java.lang.reflect 包中的 Class 类、Field 类、Method 类、Constructor类、Array 类来实现反射机制，它们分别代表类、类的成员变量类的方法、类的构造方法，动态创建数组以及访问数组元素的静态方法。</p>
+<p><strong>代码</strong><br><img src="/img/java_socket/AccountReflect.png" alt="AccountReflect" title="AccountReflect"></p>
+<p><strong>代码运行结果</strong><br><img src="/img/java_socket/AccountReflectResult.png" alt="AccountReflectResult" title="AccountReflectResult"></p>
+<p><strong>代码分析</strong><br>该代码进行了一个类型复制，调用AccountReflect的copy函数，该函数调用被复制的类型的全部函数，然后进行了一次新的调用，输出结果，返回一个新的Object。</p>
+<ul>
+<li><h4 id="2-应用反射机制实现远程方法调用"><a href="#2-应用反射机制实现远程方法调用" class="headerlink" title="(2) 应用反射机制实现远程方法调用"></a>(2) 应用反射机制实现远程方法调用</h4></li>
+</ul>
+<p>在学习了 Java 语言的反射机制后，我们很自然地会想到如何将这一机制应用于 Java 的网络程序设计中。我们可以试想，通过反射机制，客户端可以将向服务端发出的请求对象进行封装，客户端只需要知道远程对象名及其提供服务的方法名，就可以与服务端实现通信。本节应用反射机制实现远程方法调用例程综合采用了基于流的 Socket 编程，序列化机制、反射机制。</p>
+<p><strong>代码</strong><br>服务器：<br><img src="/img/java_socket/AccountRemoteReflectServer.png" alt="AccountRemoteReflectServer" title="AccountRemoteReflectServer"><br>客户端：<br><img src="/img/java_socket/AccountRemoteReflectClient.png" alt="AccountRemoteReflectClient" title="AccountRemoteReflectClient"></p>
+<p><strong>代码运行结果</strong><br>服务器：<br><img src="/img/java_socket/AccountRemoteReflectResult_Server.png" alt="AccountRemoteReflectResult_Server" title="AccountRemoteReflectResult_Server"><br>客户端：<br><img src="/img/java_socket/AccountRemoteReflectResult_Client.png" alt="AccountRemoteReflectResult_Client" title="AccountRemoteReflectResult_Client"></p>
+<p><strong>代码分析</strong><br>在该代码中，客户端使用了封装的方法，将Account类和方法封装起来，通过数据流交给服务器远程调用。服务器收到流后，从AccountService中进行调用方法，将结果返回给客户端。<br><img src="/img/java_socket/ClientRemoteReflect.png" alt="ClientRemoteReflect" title="ClientRemoteReflect"></p>
+<ul>
+<li><h4 id="3-应用代理模式实现远程方法调用"><a href="#3-应用代理模式实现远程方法调用" class="headerlink" title="(3) 应用代理模式实现远程方法调用"></a>(3) 应用代理模式实现远程方法调用</h4></li>
+</ul>
+<p><strong>代理模式</strong><br>首先理解代理模式，代理就是第三方，比如明星的经纪人，明星的事务都交给经纪人来处理，明星只要告诉经纪人去做什么，经纪人自然会想办法去做，做完之后再把结果告诉明星就好了。</p>
+<p>代理模式是一个很大的模式，所以应用很广泛，从代理的种类就能看出来了：</p>
+<ul>
+<li>远程代理：最经典的代理模式之一，远程代理负责与远程JVM通信，以实现本地调用者与远程被调用者之间的正常交互</li>
+<li>虚拟代理：用来代替巨大对象，确保它在需要的时候才被创建</li>
+<li>保护代理：给被调用者提供访问控制，确认调用者的权限</li>
+<li>此外还有防火墙代理，智能引用代理，缓存代理，同步代理，复杂隐藏代理，写入时复制代理等等，都有各自特殊的用途</li>
+</ul>
+<p><strong>代码运行结果</strong><br>服务器：<br><img src="/img/java_socket/Server.png" alt="Server" title="Server"><br>客户端：<br><img src="/img/java_socket/Client.png" alt="Client" title="Client"></p>
+<p><strong>代码分析</strong><br>在该代码中，客户端分别调用了DynamicProxyService和StaticProxyService这两个类，其中静态代理类由程序员创建或由特定工具自动生成源代码，再对其编译。在程序运行前，代理类的.class 文件就已经存在了。而动态代理类是在程序运行时,运用反射机制动态创建而成。<br><img src="/img/java_socket/ServiceProxy.png" alt="ServiceProxy" title="ServiceProxy"><br><img src="/img/java_socket/ProxyClient.png" alt="ProxyClient" title="ProxyClient"><br>客户端将要调用的方法打包给代理，代理使用Connector类发送给服务器，服务器收到方法调用后调用这个方法，将结果返回给代理，最后返回给客户端。</p>
+<hr>
+<h3 id="TCP-Socket-编程"><a href="#TCP-Socket-编程" class="headerlink" title="TCP Socket 编程"></a>TCP Socket 编程</h3><p>基于 socket 通信的服务程序负责监听对外发布的端口号，该端口专用于处理客户程序的连接请求。因而服务程序首先通过指定监听的端口号创建一个 ServerSocket 实例，然后调用该实例的 accept()方法；调用 accept()方法会引起阻塞，直至有一个客户程序发送连接请求到服务程序所监听的端口，服务程序收到连接请求后将分配一个新端口号建立与客户程序的连接，并返回该连接的一个 socket 。 然后，服务程序可调用该 socket 的getInputStream() 和getOutputStream()方法获取与客户程序的连接相关联的输入流和输出流，并依照预先约定的协议读输入流或写输出流。完成所有通信后，服务程序必须依次关闭所有输入流和输出流、所有已建立连接的 socket、以及专用于监听的 socket。</p>
+<p><strong>代码</strong><br>服务器：<br><img src="/img/java_socket/TCPServer.png" alt="TCPServer" title="TCPServer"><br>客户端：<br><img src="/img/java_socket/TCPClient.png" alt="TCPClient" title="TCPClient"></p>
+<p><strong>代码运行结果</strong><br>服务器：<br><img src="/img/java_socket/TCPResult_Server.png" alt="TCPResult_Server" title="TCPResult_Server"><br>客户端：<br><img src="/img/java_socket/TCPResult_Client.png" alt="TCPResult_Client" title="TCPResult_Client"></p>
+<p><strong>代码分析</strong><br>在该代码中，服务器首先监听端口，客户端随后连接端口。服务器和客户端都建立socket，将客户端的请求由客户端的socket发送至服务器，服务器接受请求后将响应发送给客户端。当收到的请求是end时就关闭连接。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag">#Java</a>
+          
+            <a href="/tags/Socket/" rel="tag">#Socket</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/redis-server-client/" rel="next" title="Ubuntu下安装Redis服务器">
+                <i class="fa fa-chevron-left"></i> Ubuntu下安装Redis服务器
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/spring-mvc-tutorial/" rel="prev" title="使用Spring-MVC开发Web应用">
+                使用Spring-MVC开发Web应用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="java-and-socket/"
+     data-title="Java Socket 编程"
+     data-content=""
+     data-url="http://yoursite.com/java-and-socket/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="java-and-socket/"
+           data-title="Java Socket 编程" data-url="http://yoursite.com/java-and-socket/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/avatar.jpg"
+               alt="Mino Gump" />
+          <p class="site-author-name" itemprop="name">Mino Gump</p>
+          <p class="site-description motion-element" itemprop="description">千里之行，始于足下</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/blogmrg" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zh-cn.facebook.com/people/%E7%94%98%E9%93%AD%E4%B9%90/100011770406458" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/MinoGump" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://leetcode.com/" title="LeetCode" target="_blank">LeetCode</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://stackoverflow.com/" title="stack overflow" target="_blank">stack overflow</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-Socket-编程"><span class="nav-number">1.</span> <span class="nav-text">Java Socket 编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-异常"><span class="nav-number">1.0.1.</span> <span class="nav-text">1. 异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Java多线程"><span class="nav-number">1.0.2.</span> <span class="nav-text">2. Java多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-应用-Runnable-创建线程"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">(1) 应用 Runnable 创建线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-继承-Thread-类"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">(2) 继承 Thread 类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Java序列化"><span class="nav-number">1.0.3.</span> <span class="nav-text">3. Java序列化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Java-语言的反射机制"><span class="nav-number">1.0.4.</span> <span class="nav-text">4. Java 语言的反射机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Java-语言的反射机制原理"><span class="nav-number">1.0.4.1.</span> <span class="nav-text">(1) Java 语言的反射机制原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-应用反射机制实现远程方法调用"><span class="nav-number">1.0.4.2.</span> <span class="nav-text">(2) 应用反射机制实现远程方法调用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-应用代理模式实现远程方法调用"><span class="nav-number">1.0.4.3.</span> <span class="nav-text">(3) 应用代理模式实现远程方法调用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-Socket-编程"><span class="nav-number">1.0.5.</span> <span class="nav-text">TCP Socket 编程</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mino Gump</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"minogump"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

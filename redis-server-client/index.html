@@ -1,0 +1,782 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Redis," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Ubuntu下安装Redis服务器Redis是一个开源、支持网络、基于内存、键值对存储数据库，使用ANSIC编写。Redis是目前最流行的键值对存储数据库。
+Redis的优点主要是具有非常丰富的数据结构（包括双向链表，set，hashmap等），其次还能高速读写，可以保证并发访问操作数据的一致性。
+Redis的缺点主要是耗内存和写入磁盘的速度慢。因为Redis是将数据直接存储到内存中的，因此内存消">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu下安装Redis服务器">
+<meta property="og:url" content="http://yoursite.com/redis-server-client/index.html">
+<meta property="og:site_name" content="米诺的博客">
+<meta property="og:description" content="Ubuntu下安装Redis服务器Redis是一个开源、支持网络、基于内存、键值对存储数据库，使用ANSIC编写。Redis是目前最流行的键值对存储数据库。
+Redis的优点主要是具有非常丰富的数据结构（包括双向链表，set，hashmap等），其次还能高速读写，可以保证并发访问操作数据的一致性。
+Redis的缺点主要是耗内存和写入磁盘的速度慢。因为Redis是将数据直接存储到内存中的，因此内存消">
+<meta property="og:image" content="http://yoursite.com/img/redis/make-install.png">
+<meta property="og:updated_time" content="2016-08-01T15:47:40.954Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ubuntu下安装Redis服务器">
+<meta name="twitter:description" content="Ubuntu下安装Redis服务器Redis是一个开源、支持网络、基于内存、键值对存储数据库，使用ANSIC编写。Redis是目前最流行的键值对存储数据库。
+Redis的优点主要是具有非常丰富的数据结构（包括双向链表，set，hashmap等），其次还能高速读写，可以保证并发访问操作数据的一致性。
+Redis的缺点主要是耗内存和写入磁盘的速度慢。因为Redis是将数据直接存储到内存中的，因此内存消">
+<meta name="twitter:image" content="http://yoursite.com/img/redis/make-install.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6313394359244948000,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/redis-server-client/"/>
+
+  <title> Ubuntu下安装Redis服务器 | 米诺的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">米诺的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Ubuntu下安装Redis服务器
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-11-20T12:23:24+08:00" content="2015-11-20">
+              2015-11-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Tech/" itemprop="url" rel="index">
+                    <span itemprop="name">Tech</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Tech/Database/" itemprop="url" rel="index">
+                    <span itemprop="name">Database</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Tech/Database/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/redis-server-client/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="redis-server-client/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Ubuntu下安装Redis服务器"><a href="#Ubuntu下安装Redis服务器" class="headerlink" title="Ubuntu下安装Redis服务器"></a>Ubuntu下安装Redis服务器</h1><p>Redis是一个开源、支持网络、基于内存、键值对存储数据库，使用ANSIC编写。Redis是目前最流行的键值对存储数据库。</p>
+<p>Redis的优点主要是具有非常丰富的数据结构（包括双向链表，set，hashmap等），其次还能高速读写，可以保证并发访问操作数据的一致性。</p>
+<p>Redis的缺点主要是耗内存和写入磁盘的速度慢。因为Redis是将数据直接存储到内存中的，因此内存消耗很大，备份数据时间花费较大。</p>
+<h3 id="Install-Redis-Server"><a href="#Install-Redis-Server" class="headerlink" title="Install Redis Server"></a>Install Redis Server</h3><ul>
+<li><p>下载Redis官方稳定版Server，可以<a href="http://redis.io/download" target="_blank" rel="external">手动下载</a>，也可以使用命令行下载<br><code># wget http://download.redis.io/releases/redis-3.0.5.tar.gz</code></p>
+</li>
+<li><p>解压并移动到/opt文件夹中<br><code># tar xzf redis-3.0.5.tar.gz</code><br><code># mv redis-3.0.5/ /opt/</code></p>
+</li>
+<li><p>编译redis<br><code># cd /opt/redis-3.0.5</code><br><code># make</code></p>
+</li>
+<li><p>编译完后会出现”It’s a good idea to run ‘make test’”返回信息，于是我们make test看看测试效果如何<br><code># make test</code></p>
+</li>
+<li><p>make test完毕后如无意外能够返回”all tests passed without errors!”，用”make install”检查一下是否所有都安装成功<br><code># sudo make install</code><br><img src="/img/redis/make-install.png" alt="photo1"></p>
+</li>
+<li><p>启动redis服务器<br><code># cd utils/</code><br><code># ./install_server.sh</code><br><code># service redis_6379 start</code><br><code># redis-cli</code></p>
+</li>
+<li><p>关闭redis服务器<br><code># service redis_6379 stop</code></p>
+</li>
+</ul>
+<h3 id="Install-Python-API"><a href="#Install-Python-API" class="headerlink" title="Install Python API"></a>Install Python API</h3><ul>
+<li><p>安装一个python的redis接口，使py文件可以连接到redis服务器<br><code>$ sudo pip install redis</code></p>
+</li>
+<li><p>在python中使用redis<br><code>&gt;&gt;&gt; import redis</code><br><code>&gt;&gt;&gt; r = redis.StrictRedis(host=&quot;localhost&quot;, port=6379, db=0)</code></p>
+</li>
+</ul>
+<h3 id="Usage-of-Redis-in-Python"><a href="#Usage-of-Redis-in-Python" class="headerlink" title="Usage of Redis in Python"></a>Usage of Redis in Python</h3><ul>
+<li><p>set<br><code>&gt;&gt;&gt; r.set(&#39;foo&#39;, &#39;bar&#39;)</code><br><code>&gt;&gt;&gt; r.get(&#39;foo&#39;)</code></p>
+</li>
+<li><p>mset mget<br><code>&gt;&gt;&gt; r.mset(first = 10, second = 20, third = 30)</code><br><code>&gt;&gt;&gt; r.mget(&quot;first&quot;, &quot;second&quot;)</code></p>
+</li>
+<li><p>incr<br><code>&gt;&gt;&gt; r.set(&quot;counter&quot;, 100)</code><br><code>&gt;&gt;&gt; r.get(&quot;conuter&quot;)</code><br><code>&gt;&gt;&gt; r.incr(&quot;counter&quot;)</code><br><code>&gt;&gt;&gt; r.incrby(&quot;counter&quot;, 10)</code></p>
+</li>
+<li><p>exist<br><code>&gt;&gt;&gt; r.exists(&quot;first&quot;)</code><br><code>&gt;&gt;&gt; r.exists(&quot;firs&quot;)</code></p>
+</li>
+<li><p>del<br><code>&gt;&gt;&gt; r.delete(&quot;first&quot;)</code><br><code>&gt;&gt;&gt; r.delete(&quot;firs&quot;)</code><br><code>&gt;&gt;&gt; r.get(&quot;first&quot;)</code></p>
+</li>
+<li><p>expire (n秒后删除数据)<br><code>&gt;&gt;&gt; r.expire(&quot;second&quot;, 10)</code></p>
+</li>
+<li><p>list (双向链表，可用做队列和堆栈)<br><code>&gt;&gt;&gt; r.lpush(&quot;mylist&quot;, 1)</code><br><code>&gt;&gt;&gt; r.lrange(&quot;mylist&quot;, 0, -1)</code><br><code>&gt;&gt;&gt; r.lpush(&quot;mylist&quot;, 2, 3, 2, 3)</code><br><code>&gt;&gt;&gt; r.lrange(&quot;mylist&quot;, 0, -1)</code><br><code>&gt;&gt;&gt; r.rpush(&quot;mylist&quot;, 4)</code><br><code>&gt;&gt;&gt; r.lrange(&quot;mylist&quot;, 0, -1)</code></p>
+</li>
+<li><p>hash map<br><code>&gt;&gt;&gt; r.hmset(&quot;user&quot;, {&#39;name&#39;: &#39;robert&#39;, &#39;age&#39;: 32})</code><br><code>&gt;&gt;&gt; r.hgetall(&quot;user&quot;)</code><br><code>&gt;&gt;&gt; r.hget(&quot;user&quot;,&quot;name&quot;)</code></p>
+</li>
+<li><p>更多用法参考<a href="https://kushal.fedorapeople.org/redis-py/html/api.html" target="_blank" rel="external">官方文档</a></p>
+</li>
+</ul>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
+<li><a href="https://www.youtube.com/watch?v=TtQEfbp_Ihc" target="_blank" rel="external">https://www.youtube.com/watch?v=TtQEfbp_Ihc</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Redis/" rel="tag">#Redis</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/github/" rel="next" title="Github学习心得">
+                <i class="fa fa-chevron-left"></i> Github学习心得
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/java-and-socket/" rel="prev" title="Java Socket 编程">
+                Java Socket 编程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="redis-server-client/"
+     data-title="Ubuntu下安装Redis服务器"
+     data-content=""
+     data-url="http://yoursite.com/redis-server-client/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="redis-server-client/"
+           data-title="Ubuntu下安装Redis服务器" data-url="http://yoursite.com/redis-server-client/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/avatar.jpg"
+               alt="Mino Gump" />
+          <p class="site-author-name" itemprop="name">Mino Gump</p>
+          <p class="site-description motion-element" itemprop="description">千里之行，始于足下</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/blogmrg" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zh-cn.facebook.com/people/%E7%94%98%E9%93%AD%E4%B9%90/100011770406458" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/MinoGump" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://leetcode.com/" title="LeetCode" target="_blank">LeetCode</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://stackoverflow.com/" title="stack overflow" target="_blank">stack overflow</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu下安装Redis服务器"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu下安装Redis服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Install-Redis-Server"><span class="nav-number">1.0.1.</span> <span class="nav-text">Install Redis Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Install-Python-API"><span class="nav-number">1.0.2.</span> <span class="nav-text">Install Python API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Usage-of-Redis-in-Python"><span class="nav-number">1.0.3.</span> <span class="nav-text">Usage of Redis in Python</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">1.0.4.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mino Gump</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"minogump"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

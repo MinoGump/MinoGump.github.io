@@ -1,0 +1,815 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Github," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Github学习心得不得不说，Git是一个强大的分布式版本控制系统。
+对比起集中式分布系统来说，分布式版本控制系统仅仅是传输了对文件的修改，而非文件本身，所以使用Git的时候你会发现上传下载的速度都很快。
+集中式的特点是仅仅只有一台主机作为库，所有程序员都要从这台主机上上传下载文件，所以当使用互联网而带宽不足，文件太大时，上传下载耗费的时间就很多了。而分布式版本控制系统的最大优势在于每个程序员直接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Github学习心得">
+<meta property="og:url" content="http://yoursite.com/github/index.html">
+<meta property="og:site_name" content="米诺的博客">
+<meta property="og:description" content="Github学习心得不得不说，Git是一个强大的分布式版本控制系统。
+对比起集中式分布系统来说，分布式版本控制系统仅仅是传输了对文件的修改，而非文件本身，所以使用Git的时候你会发现上传下载的速度都很快。
+集中式的特点是仅仅只有一台主机作为库，所有程序员都要从这台主机上上传下载文件，所以当使用互联网而带宽不足，文件太大时，上传下载耗费的时间就很多了。而分布式版本控制系统的最大优势在于每个程序员直接">
+<meta property="og:updated_time" content="2016-08-01T15:46:34.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Github学习心得">
+<meta name="twitter:description" content="Github学习心得不得不说，Git是一个强大的分布式版本控制系统。
+对比起集中式分布系统来说，分布式版本控制系统仅仅是传输了对文件的修改，而非文件本身，所以使用Git的时候你会发现上传下载的速度都很快。
+集中式的特点是仅仅只有一台主机作为库，所有程序员都要从这台主机上上传下载文件，所以当使用互联网而带宽不足，文件太大时，上传下载耗费的时间就很多了。而分布式版本控制系统的最大优势在于每个程序员直接">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6313394359244948000,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/github/"/>
+
+  <title> Github学习心得 | 米诺的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">米诺的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Github学习心得
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-09-23T17:36:44+08:00" content="2015-09-23">
+              2015-09-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Tech/" itemprop="url" rel="index">
+                    <span itemprop="name">Tech</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Tech/Github/" itemprop="url" rel="index">
+                    <span itemprop="name">Github</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/github/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="github/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Github学习心得"><a href="#Github学习心得" class="headerlink" title="Github学习心得"></a>Github学习心得</h1><p>不得不说，Git是一个强大的分布式版本控制系统。</p>
+<p>对比起集中式分布系统来说，分布式版本控制系统仅仅是传输了对文件的修改，而非文件本身，所以使用Git的时候你会发现上传下载的速度都很快。</p>
+<p>集中式的特点是仅仅只有一台主机作为库，所有程序员都要从这台主机上上传下载文件，所以当使用互联网而带宽不足，文件太大时，上传下载耗费的时间就很多了。而分布式版本控制系统的最大优势在于每个程序员直接都可以传输文件，这就是本地库的使用。有了本地库，两台电脑就可以互相传输文件，最后只要再合并后上传到总库即可，这无疑大大提高了工作效率。</p>
+<h3 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h3><ul>
+<li><p>Linux下打开终端输入 sudo apt-get install git</p>
+</li>
+<li><p>Windows下打开<a href="http://msysgit.github.io/，从里面下载msysgit并安装即可" target="_blank" rel="external">http://msysgit.github.io/，从里面下载msysgit并安装即可</a></p>
+</li>
+<li><p>MacOS的话用Xcode，点击菜单栏的Preference，找到Download并选择command line tools，点击instal即可</p>
+</li>
+<li><p>最后输入本地Git作者信息，终端输入<br><code>$ git config --global user.name &quot;YourName&quot;</code><br><code>$ git config --global user.email &quot;YourEmail@example.com&quot;</code></p>
+</li>
+</ul>
+<h3 id="新建本地版本库"><a href="#新建本地版本库" class="headerlink" title="新建本地版本库"></a>新建本地版本库</h3><ul>
+<li><p>在本地的一个工作目录下新建一个本地库<br><code>$ git init</code></p>
+</li>
+<li><p>这时在文件夹中就会出现.git的隐藏文件夹，输入ll便可查看</p>
+</li>
+</ul>
+<h3 id="添加文件"><a href="#添加文件" class="headerlink" title="添加文件"></a>添加文件</h3><ul>
+<li><p>这里本地版本库分暂存区和分支，而工作区就是本地文件夹。我们首先将工作区（当前文件夹）里面的文件添加到暂存区里面<br><code>$ git add FileName</code></p>
+</li>
+<li><p>再添加到分支里面<br><code>$ git commit -m &quot;added message&quot;</code></p>
+</li>
+<li><p>这里添加到分支还可以添加一个信息，就是简单介绍这个提交修改了什么</p>
+</li>
+</ul>
+<h3 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h3><ul>
+<li><p>分支是Git里面一个强大的机制，分支是发展是按时间轴进行的，可以将分支理解为一个链表。这个链表的头部HEAD指向最后一次提交（包括分支名和提交号）</p>
+</li>
+<li><p>如果创建一个分支，就是从当前分支新建一个节点创建<br><code>$ git branch</code></p>
+</li>
+<li><p>这条命令用于查看当前工作区的所有分支，*标记的是当前分支</p>
+</li>
+<li><p>下面是一些分支的命令</p>
+</li>
+<li><p>创建并切换分支<br>`$ git checkout -b BranchName’</p>
+</li>
+<li><p>切换分支<br><code>$ git checkout BranchName</code></p>
+</li>
+</ul>
+<h3 id="查看git状态"><a href="#查看git状态" class="headerlink" title="查看git状态"></a>查看git状态</h3><ul>
+<li><p>我们可以通过一系列的查看命令查看当前的工作区/暂存区/分支表的状态<br><code>$ git status</code></p>
+</li>
+<li><p>查看具体修改了什么内容<br><code>$ git diff</code></p>
+</li>
+<li><p>检查两个文件的不同<br><code>$ git diff HEAD -- FileName</code></p>
+</li>
+<li><p>查看库所有修改内容（包括其他人）<br><code>$ git log</code></p>
+</li>
+<li><p>单行查看（简便）<br><code>$ git log --pretty=oneline</code></p>
+</li>
+<li><p>图形查看（分支明显）<br><code>$ git log --pretty=oneline --abbrev-commit</code></p>
+</li>
+</ul>
+<h3 id="回退分支表的版本"><a href="#回退分支表的版本" class="headerlink" title="回退分支表的版本"></a>回退分支表的版本</h3><ul>
+<li><p>回到CommitID的状态，CommitID可以在log中获取<br><code>$ git reset --hard CommitID</code></p>
+</li>
+<li><p>回退到上一版本<br><code>$ git reset --hard HEAD^</code></p>
+</li>
+<li><p>回退到上100个版本<br><code>$ git reset --hard HEAD~100</code></p>
+</li>
+</ul>
+<h3 id="新建远程库，克隆远程库，上传与拉下"><a href="#新建远程库，克隆远程库，上传与拉下" class="headerlink" title="新建远程库，克隆远程库，上传与拉下"></a>新建远程库，克隆远程库，上传与拉下</h3><ul>
+<li><p>远程库的新建有SSH和http两种协议，如果是SSH协议来创建远程库的话，要在终端输入ssh -keygen -t rsa -C “youremail@example.com”来产生一个密钥存储本机信息，然后在主文件夹中打开.ssh隐藏文件夹，找到id_rsa.pub（公钥，没有.pub的是私钥）。将公钥复制到GitHub的SSH Key。最后在GitHub上新建一个公共的仓库即可。<br><code>$ git remote add RemoteName git@github.com:GithubName/ReporityName.git</code></p>
+</li>
+<li><p>克隆就是将远程库的所有东西下载到本地文件夹中，简单来说就是工作的开始<br><code>$ git clone git@github.com:GithubName/ReporityName.git</code></p>
+</li>
+<li><p>上传用push，拉下用pull。每次你修改完成后要push到另外一个库，就要用push。每次你想从别人的版本中更新到自己的本地，就要用pull<br><code>$ git push RemoteName BranchName:RemoteBranchName</code><br><code>$ git pull RemoteName BranchName</code></p>
+</li>
+</ul>
+<h3 id="合并分支，解决冲突"><a href="#合并分支，解决冲突" class="headerlink" title="合并分支，解决冲突"></a>合并分支，解决冲突</h3><ul>
+<li><p>在多分支工作就要合并，合并是Git一个重要的功能，通过merge合并。</p>
+</li>
+<li><p>将BranchName分支的内容合并到当前分支<br><code>$ git merge BranchName</code></p>
+</li>
+<li><p>采用非FastForward方法合并<br>$ git merge –no-ff -m “merge message” BranchName`</p>
+</li>
+</ul>
+<h3 id="管理标签"><a href="#管理标签" class="headerlink" title="管理标签"></a>管理标签</h3><ul>
+<li><p>标签是个挺方便查看项目的东西，我们可以新建标签和修改标签等</p>
+</li>
+<li><p>查看标签<br><code>$ git tag</code></p>
+</li>
+<li><p>新建标签<br>`$ git tag TagName</p>
+</li>
+<li><p>删除标签<br><code>$ git tag -d TagName</code></p>
+</li>
+</ul>
+<h3 id="忽略文件"><a href="#忽略文件" class="headerlink" title="忽略文件"></a>忽略文件</h3><ul>
+<li>如果在当前文件夹下有些无关的文件，而用status 查看时又会显示未跟踪，该怎么办呢。我们只需要在当前文件夹下新建一个.gitignore文件，将需要隐藏的文件或文件夹添加到这个文件中即可。</li>
+</ul>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
+<li><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Github/" rel="tag">#Github</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/mino-s-blog/" rel="next" title="Hexo+Github搭建博客">
+                <i class="fa fa-chevron-left"></i> Hexo+Github搭建博客
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/redis-server-client/" rel="prev" title="Ubuntu下安装Redis服务器">
+                Ubuntu下安装Redis服务器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="github/"
+     data-title="Github学习心得"
+     data-content=""
+     data-url="http://yoursite.com/github/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="github/"
+           data-title="Github学习心得" data-url="http://yoursite.com/github/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/avatar.jpg"
+               alt="Mino Gump" />
+          <p class="site-author-name" itemprop="name">Mino Gump</p>
+          <p class="site-description motion-element" itemprop="description">千里之行，始于足下</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/blogmrg" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zh-cn.facebook.com/people/%E7%94%98%E9%93%AD%E4%B9%90/100011770406458" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/MinoGump" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://leetcode.com/" title="LeetCode" target="_blank">LeetCode</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://stackoverflow.com/" title="stack overflow" target="_blank">stack overflow</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Github学习心得"><span class="nav-number">1.</span> <span class="nav-text">Github学习心得</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Git"><span class="nav-number">1.0.1.</span> <span class="nav-text">安装Git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新建本地版本库"><span class="nav-number">1.0.2.</span> <span class="nav-text">新建本地版本库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加文件"><span class="nav-number">1.0.3.</span> <span class="nav-text">添加文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分支"><span class="nav-number">1.0.4.</span> <span class="nav-text">分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看git状态"><span class="nav-number">1.0.5.</span> <span class="nav-text">查看git状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回退分支表的版本"><span class="nav-number">1.0.6.</span> <span class="nav-text">回退分支表的版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新建远程库，克隆远程库，上传与拉下"><span class="nav-number">1.0.7.</span> <span class="nav-text">新建远程库，克隆远程库，上传与拉下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#合并分支，解决冲突"><span class="nav-number">1.0.8.</span> <span class="nav-text">合并分支，解决冲突</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管理标签"><span class="nav-number">1.0.9.</span> <span class="nav-text">管理标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#忽略文件"><span class="nav-number">1.0.10.</span> <span class="nav-text">忽略文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">1.0.11.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mino Gump</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"minogump"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>
