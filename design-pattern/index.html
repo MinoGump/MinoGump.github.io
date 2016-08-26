@@ -85,18 +85,26 @@
 
 
 <meta name="description" content="[TOC]
-设计模式总结">
+设计模式总结创建型模式简单工厂模式工厂模式是很常用的一种创建型设计模式，而简单工厂模式是工厂模式中最简单的一种。在我们需要创建不同种类的产品时，我们最好能够利用简单工厂类进行带参数的创建产品。简单来说，由于不同的种类产品属于产品类的子类，它们有各自的子类方法，但是产品父类不知道子类的情况。所以要创建产品时应该用一个工厂类引用所有产品类。并通过参数的方式实现创建各个产品。
+
+代码分析12">
 <meta property="og:type" content="article">
 <meta property="og:title" content="常用的设计模式">
 <meta property="og:url" content="http://yoursite.com/design-pattern/index.html">
 <meta property="og:site_name" content="米诺的博客">
 <meta property="og:description" content="[TOC]
-设计模式总结">
-<meta property="og:updated_time" content="2016-08-25T15:55:09.874Z">
+设计模式总结创建型模式简单工厂模式工厂模式是很常用的一种创建型设计模式，而简单工厂模式是工厂模式中最简单的一种。在我们需要创建不同种类的产品时，我们最好能够利用简单工厂类进行带参数的创建产品。简单来说，由于不同的种类产品属于产品类的子类，它们有各自的子类方法，但是产品父类不知道子类的情况。所以要创建产品时应该用一个工厂类引用所有产品类。并通过参数的方式实现创建各个产品。
+
+代码分析12">
+<meta property="og:image" content="http://yoursite.com/img/design-pattern/SimpleFactory.png">
+<meta property="og:updated_time" content="2016-08-26T16:52:44.659Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="常用的设计模式">
 <meta name="twitter:description" content="[TOC]
-设计模式总结">
+设计模式总结创建型模式简单工厂模式工厂模式是很常用的一种创建型设计模式，而简单工厂模式是工厂模式中最简单的一种。在我们需要创建不同种类的产品时，我们最好能够利用简单工厂类进行带参数的创建产品。简单来说，由于不同的种类产品属于产品类的子类，它们有各自的子类方法，但是产品父类不知道子类的情况。所以要创建产品时应该用一个工厂类引用所有产品类。并通过参数的方式实现创建各个产品。
+
+代码分析12">
+<meta name="twitter:image" content="http://yoursite.com/img/design-pattern/SimpleFactory.png">
 
 
 
@@ -328,7 +336,27 @@
 
       
         <p>[TOC]</p>
-<h1 id="设计模式总结"><a href="#设计模式总结" class="headerlink" title="设计模式总结"></a>设计模式总结</h1>
+<h1 id="设计模式总结"><a href="#设计模式总结" class="headerlink" title="设计模式总结"></a>设计模式总结</h1><h2 id="创建型模式"><a href="#创建型模式" class="headerlink" title="创建型模式"></a>创建型模式</h2><h3 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h3><p>工厂模式是很常用的一种创建型设计模式，而简单工厂模式是工厂模式中最简单的一种。在我们<br>需要创建不同种类的产品时，我们最好能够利用简单工厂类进行带参数的创建产品。<br>简单来说，由于不同的种类产品属于产品类的子类，它们有各自的子类方法，但是产品父类不知道子类的情况。<br>所以要创建产品时应该用一个工厂类引用所有产品类。并通过参数的方式实现创建各个产品。</p>
+<p><img src="/img/design-pattern/SimpleFactory.png" alt=""></p>
+<h4 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">///////////////////////////////////////////////////////////</span></div><div class="line"><span class="comment">//  Factory.cpp</span></div><div class="line"><span class="comment">//  Implementation of the Class Factory</span></div><div class="line"><span class="comment">//  Created on:      01-十月-2014 18:41:33</span></div><div class="line"><span class="comment">//  Original author: colin</span></div><div class="line"><span class="comment">///////////////////////////////////////////////////////////</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Factory.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"ConcreteProductA.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"ConcreteProductB.h"</span></span></div><div class="line">Product* Factory::createProduct(<span class="built_in">string</span> proname)&#123;</div><div class="line">	<span class="keyword">if</span> ( <span class="string">"A"</span> == proname )</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ConcreteProductA();</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">"B"</span> == proname)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ConcreteProductB();</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span>  <span class="literal">NULL</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="模式分析"><a href="#模式分析" class="headerlink" title="模式分析"></a>模式分析</h4><ul>
+<li>将对象的创建和对象本身业务处理分离可以降低系统的耦合度，使得两者修改起来都相对容易。</li>
+<li>在调用工厂类的工厂方法时，由于工厂方法是静态方法，使用起来很方便，可通过类名直接调用，而且只需要传入一个简单的参数即可，在实际开发中，还可以在调用时将所传入的参数保存在XML等格式的配置文件中，修改参数时无须修改任何源代码。</li>
+<li>简单工厂模式最大的问题在于工厂类的职责相对过重，增加新的产品需要修改工厂类的判断逻辑，这一点与开闭原则是相违背的。</li>
+<li>简单工厂模式的要点在于：当你需要什么，只需要传入一个正确的参数，就可以获取你所需要的对象，而无须知道其创建细节。</li>
+</ul>
+<h4 id="模式优点"><a href="#模式优点" class="headerlink" title="模式优点"></a>模式优点</h4><ul>
+<li>工厂类的创建函数含有必要的判断逻辑，可以决定在什么时候创建哪一个产品类的实例，客户端可以直接使用产品（相当于自适应）</li>
+<li>简单工厂模式通过这种做法实现了对责任的分割，它提供了专门的工厂类用于创建对象。</li>
+<li>通过引入配置文件，可以在不修改任何客户端代码的情况下更换和增加新的具体产品类，在一定程度上提高了系统的灵活性。</li>
+</ul>
+<h4 id="模式缺点"><a href="#模式缺点" class="headerlink" title="模式缺点"></a>模式缺点</h4><ul>
+<li>由于工厂类集中了所有产品创建逻辑，一旦不能正常工作，整个系统都要受到影响。</li>
+<li>使用简单工厂模式将会增加系统中类的个数，在一定程序上增加了系统的复杂度和理解难度。</li>
+<li>系统扩展困难，一旦添加新产品就不得不修改工厂逻辑，在产品类型较多时，有可能造成工厂逻辑过于复杂，不利于系统的扩展和维护。</li>
+<li>简单工厂模式由于使用了静态工厂方法，造成工厂角色无法形成基于继承的等级结构。</li>
+</ul>
+
       
     </div>
 
@@ -549,7 +577,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#设计模式总结"><span class="nav-number">1.</span> <span class="nav-text">设计模式总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#设计模式总结"><span class="nav-number">1.</span> <span class="nav-text">设计模式总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建型模式"><span class="nav-number">1.1.</span> <span class="nav-text">创建型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂模式"><span class="nav-number">1.1.1.</span> <span class="nav-text">简单工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码分析"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">代码分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模式分析"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">模式分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模式优点"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">模式优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模式缺点"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">模式缺点</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>
