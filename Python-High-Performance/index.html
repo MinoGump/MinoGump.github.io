@@ -96,7 +96,18 @@ cProfilePython呢，">
 <meta property="og:image" content="http://yoursite.com/img/python-high-performance/cProfile/testcProfile_res.png">
 <meta property="og:image" content="http://yoursite.com/img/python-high-performance/cProfile/testRecursion_0.png">
 <meta property="og:image" content="http://yoursite.com/img/python-high-performance/cProfile/testRecursion_1.png">
-<meta property="og:updated_time" content="2016-10-10T03:21:24.346Z">
+<meta property="og:image" content="http://yoursite.com/img/python-high-performance/cProfile/testRecursion_res.png">
+<meta property="og:image" content="http://yoursite.com/img/python-high-performance/cProfile/testIterator_0.png">
+<meta property="og:image" content="http://yoursite.com/img/python-high-performance/cProfile/testIterator_1.png">
+<meta property="og:image" content="http://yoursite.com/img/python-high-performance/cProfile/testIterator_res.png">
+<meta property="og:image" content="http://yoursite.com/img/python-high-performance/cProfile/testIterator_0.png">
+<meta property="og:image" content="http://yoursite.com/img/python-high-performance/cProfile/testCached_1.png">
+<meta property="og:image" content="http://yoursite.com/img/python-high-performance/cProfile/testCached_res.png">
+<meta property="og:image" content="http://yoursite.com/img/python-high-performance/line_profiler/testRecursion_0.png">
+<meta property="og:image" content="http://yoursite.com/img/python-high-performance/line_profiler/testRecursion_res.png">
+<meta property="og:image" content="http://yoursite.com/img/python-high-performance/line_profiler/testIterator_0.png">
+<meta property="og:image" content="http://yoursite.com/img/python-high-performance/line_profiler/testIterator_res.png">
+<meta property="og:updated_time" content="2016-10-10T07:53:30.560Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python性能分析与优化（一） —— 性能分析器">
 <meta name="twitter:description" content="Python性能分析与优化（一） —— 性能分析器今天读了Python性能分析与优化这本书大半了，开始写几篇博客，首先介绍一下这本书吧。Fernando Doglio写的这本书包含8个章节，其中第二章性能分析器介绍了几种关于Python性能分析的工具；第三章可视化分析数据介绍了几种GUI的性能分析工具；第四章优化细节介绍了一些优化性能的技巧。今天先从第二章开始吧。
@@ -358,6 +369,35 @@ cProfilePython呢，">
 <p><img src="/img/python-high-performance/cProfile/testRecursion_0.png" alt=""></p>
 <p>以及主函数：</p>
 <p><img src="/img/python-high-performance/cProfile/testRecursion_1.png" alt=""></p>
+<p>用python执行脚本结果如下：</p>
+<p><img src="/img/python-high-performance/cProfile/testRecursion_res.png" alt=""></p>
+<p>其实这是因为递归执行fib函数次数太多了，导致栈空间不足，因此我们修改一下程序，非递归执行(即采用迭代的方法获取斐波那契数列)，得到新的版本如下：</p>
+<p><img src="/img/python-high-performance/cProfile/testIterator_0.png" alt=""></p>
+<p><img src="/img/python-high-performance/cProfile/testIterator_1.png" alt=""></p>
+<p>采用迭代的方法执行python程序，性能上是怎样呢？</p>
+<p><img src="/img/python-high-performance/cProfile/testIterator_res.png" alt=""></p>
+<p>我们可以看到，fib这个函数被调用了5005次，占用的时间最多，达到了0.308s，还有0.015s用在了fib函数中的循环中，我们知道，因为在求斐波那契数列时，fib(1)是重复多次被调用的，于是我们可以使用缓存的方式来存储我们求过的斐波那契数据。代码如下：</p>
+<p><img src="/img/python-high-performance/cProfile/testIterator_0.png" alt=""></p>
+<p><img src="/img/python-high-performance/cProfile/testCached_1.png" alt=""></p>
+<p>运行一下，看下结果如何：</p>
+<p><img src="/img/python-high-performance/cProfile/testCached_res.png" alt=""></p>
+<p>这下我们看到了，cached_fib函数只被调用了1001次，占用0.069s，也就是说，节省了4004次重新计算斐波那契数据。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>cProfile作为python自带的性能分析器，其优点是简单方便，能看到CPU的时间占用情况以及函数调用情况。有丰富的API用于执行、输出等。</p>
+<p>但是其缺点是无法统计内存等情况，并且误差存在且不可忽视，因为cProfile统计时间利用的是系统内部的时钟，由于切换函数等，存在一定的滞后，所以误差不可避免。</p>
+<h2 id="line-profiler"><a href="#line-profiler" class="headerlink" title="line_profiler"></a>line_profiler</h2><p>接下来是一款逐行分析的性能分析器——line_profiler。它试图弥补cProfile和类似性能分析器的不足。其他性能分析器主要关注函数调用消耗的CPU时间。大多数情况下，这足以发现问题，消除瓶颈。但是，如果瓶颈问题出现在函数中的某一行，这是就需要line_profiler了。</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>使用pip安装line_profiler：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install line_profiler</div></pre></td></tr></table></figure>
+<blockquote>
+<p>如果安装过程中出现问题，比如文件缺失，则可以安装如下依赖<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; sudo apt-get install python-dev libxml2-dev libxslt-dev</div><div class="line">&gt;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="斐波那契数列性能-1"><a href="#斐波那契数列性能-1" class="headerlink" title="斐波那契数列性能"></a>斐波那契数列性能</h3><p>下面用原来的代码继续分析斐波那契数列生成函数。这里的代码只需要更改一小部分的接口即可，其他的核心函数不用变。</p>
+<p><img src="/img/python-high-performance/line_profiler/testRecursion_0.png" alt=""></p>
+<p>其结果如下，依然是递归调用次数过多，栈空间不足导致程序崩溃。</p>
+<p><img src="/img/python-high-performance/line_profiler/testRecursion_res.png" alt=""></p>
+<p>当我们将其改为非递归（迭代执行）时，分析程序每一行的性能：</p>
+<p><img src="/img/python-high-performance/line_profiler/testIterator_0.png" alt=""></p>
+<p><img src="/img/python-high-performance/line_profiler/testIterator_res.png" alt=""></p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>相比cProfile，line_profiler能够分析到每个函数的每一行的执行次数及时间等，但是缺点也很明显，line_profiler不能够从整体程序上进行分析，并且也没有针对内存等关键性能进行分析。所以line_profiler适合用于模块性能的分析。</p>
 
       
     </div>
@@ -579,7 +619,7 @@ cProfilePython呢，">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python性能分析与优化（一）-——-性能分析器"><span class="nav-number">1.</span> <span class="nav-text">Python性能分析与优化（一） —— 性能分析器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cProfile"><span class="nav-number">1.1.</span> <span class="nav-text">cProfile</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#斐波那契数列性能"><span class="nav-number">1.1.1.</span> <span class="nav-text">斐波那契数列性能</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python性能分析与优化（一）-——-性能分析器"><span class="nav-number">1.</span> <span class="nav-text">Python性能分析与优化（一） —— 性能分析器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cProfile"><span class="nav-number">1.1.</span> <span class="nav-text">cProfile</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#斐波那契数列性能"><span class="nav-number">1.1.1.</span> <span class="nav-text">斐波那契数列性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.1.2.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#line-profiler"><span class="nav-number">1.2.</span> <span class="nav-text">line_profiler</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">1.2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#斐波那契数列性能-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">斐波那契数列性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.2.3.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>
