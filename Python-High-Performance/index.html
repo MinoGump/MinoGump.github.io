@@ -92,11 +92,16 @@ cProfilePython呢，">
 <meta property="og:site_name" content="米诺的博客">
 <meta property="og:description" content="Python性能分析与优化（一） —— 性能分析器今天读了Python性能分析与优化这本书大半了，开始写几篇博客，首先介绍一下这本书吧。Fernando Doglio写的这本书包含8个章节，其中第二章性能分析器介绍了几种关于Python性能分析的工具；第三章可视化分析数据介绍了几种GUI的性能分析工具；第四章优化细节介绍了一些优化性能的技巧。今天先从第二章开始吧。
 cProfilePython呢，">
-<meta property="og:updated_time" content="2016-10-09T16:43:18.790Z">
+<meta property="og:image" content="http://yoursite.com/img/python-high-performance/cProfile/testcProfile.png">
+<meta property="og:image" content="http://yoursite.com/img/python-high-performance/cProfile/testcProfile_res.png">
+<meta property="og:image" content="http://yoursite.com/img/python-high-performance/cProfile/testRecursion_0.png">
+<meta property="og:image" content="http://yoursite.com/img/python-high-performance/cProfile/testRecursion_1.png">
+<meta property="og:updated_time" content="2016-10-10T03:21:24.346Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python性能分析与优化（一） —— 性能分析器">
 <meta name="twitter:description" content="Python性能分析与优化（一） —— 性能分析器今天读了Python性能分析与优化这本书大半了，开始写几篇博客，首先介绍一下这本书吧。Fernando Doglio写的这本书包含8个章节，其中第二章性能分析器介绍了几种关于Python性能分析的工具；第三章可视化分析数据介绍了几种GUI的性能分析工具；第四章优化细节介绍了一些优化性能的技巧。今天先从第二章开始吧。
 cProfilePython呢，">
+<meta name="twitter:image" content="http://yoursite.com/img/python-high-performance/cProfile/testcProfile.png">
 
 
 
@@ -328,7 +333,31 @@ cProfilePython呢，">
 
       
         <h1 id="Python性能分析与优化（一）-——-性能分析器"><a href="#Python性能分析与优化（一）-——-性能分析器" class="headerlink" title="Python性能分析与优化（一） —— 性能分析器"></a>Python性能分析与优化（一） —— 性能分析器</h1><p>今天读了Python性能分析与优化这本书大半了，开始写几篇博客，首先介绍一下这本书吧。Fernando Doglio写的这本书包含8个章节，其中第二章性能分析器介绍了几种关于Python性能分析的工具；第三章可视化分析数据介绍了几种GUI的性能分析工具；第四章优化细节介绍了一些优化性能的技巧。今天先从第二章开始吧。</p>
-<h3 id="cProfile"><a href="#cProfile" class="headerlink" title="cProfile"></a>cProfile</h3><p>Python呢，自带了一个cProfile的包，它是用于测量CPU时间、统计函数调用次数的一个包。所以cProfile不需要安装，只需要在程序中导入cProfile的包即可。</p>
+<h2 id="cProfile"><a href="#cProfile" class="headerlink" title="cProfile"></a>cProfile</h2><p>Python呢，自带了一个cProfile的包，它是用于测量CPU时间、统计函数调用次数的一个包。所以cProfile不需要安装，只需要在程序中导入cProfile的包即可。</p>
+<p>首先我们来简单测试一下cProfile包的使用效果：</p>
+<p><img src="/img/python-high-performance/cProfile/testcProfile.png" alt=""></p>
+<p>上面是一段简单的测试代码，其中我们创建了一个Profile类用于记录性能情况，用Stats类输出统计数据。这个print_stats函数接收了三个参数，第一个10表示打印前10行，第二个1.0表示按总行数的100%打印，第三个是正则表达式，用于匹配stdname。</p>
+<p>对应的输出情况如下图所示：</p>
+<p><img src="/img/python-high-performance/cProfile/testcProfile_res.png" alt=""></p>
+<ul>
+<li><p>其中第一行告诉我们一共有196个函数调用被监控，其中191个是原生调用，表明这些调用不涉及递归。</p>
+</li>
+<li><p>ncalls表示函数调用的次数。如果在这一列中有两个数值，则表明有递归调用，第二个数值是原生调用的次数，第一个数值是总调用次数。如果第一个数值很大则表明需要进行内联函数扩展。</p>
+</li>
+<li><p>tottime表示函数内部消耗的总时间，这个性能信息可以帮助我们找到需要优化的点。</p>
+</li>
+<li><p>percall是tottime/ncalls的结果，表示一个函数每次调用的平均消耗时间。</p>
+</li>
+<li><p>cumtime是之前所有子函数消耗时间的累积和。这个数值可以帮助开发者从整体视角识别性能问题，比如算法选择错误。</p>
+</li>
+<li><p>另一个percall是用cumtime除以原生调用的数量，表示到该函数调用时，每个原生调用的平均消耗时间。</p>
+</li>
+</ul>
+<h3 id="斐波那契数列性能"><a href="#斐波那契数列性能" class="headerlink" title="斐波那契数列性能"></a>斐波那契数列性能</h3><p>好了让我们实战一下cProfile性能分析器吧。这次我们选择用斐波那契数列生成函数进行示范。</p>
+<p>首先是递归实现斐波那契数列的核心代码：</p>
+<p><img src="/img/python-high-performance/cProfile/testRecursion_0.png" alt=""></p>
+<p>以及主函数：</p>
+<p><img src="/img/python-high-performance/cProfile/testRecursion_1.png" alt=""></p>
 
       
     </div>
@@ -550,7 +579,7 @@ cProfilePython呢，">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python性能分析与优化（一）-——-性能分析器"><span class="nav-number">1.</span> <span class="nav-text">Python性能分析与优化（一） —— 性能分析器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cProfile"><span class="nav-number">1.0.1.</span> <span class="nav-text">cProfile</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python性能分析与优化（一）-——-性能分析器"><span class="nav-number">1.</span> <span class="nav-text">Python性能分析与优化（一） —— 性能分析器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cProfile"><span class="nav-number">1.1.</span> <span class="nav-text">cProfile</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#斐波那契数列性能"><span class="nav-number">1.1.1.</span> <span class="nav-text">斐波那契数列性能</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>
