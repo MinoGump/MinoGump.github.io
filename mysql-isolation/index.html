@@ -105,7 +105,11 @@
 <meta property="og:image" content="http://yoursite.com/img/mysql-isolation/ru2.png">
 <meta property="og:image" content="http://yoursite.com/img/mysql-isolation/rc1.png">
 <meta property="og:image" content="http://yoursite.com/img/mysql-isolation/rc2.png">
-<meta property="og:updated_time" content="2016-12-18T01:34:14.312Z">
+<meta property="og:image" content="http://yoursite.com/img/mysql-isolation/rr1.png">
+<meta property="og:image" content="http://yoursite.com/img/mysql-isolation/rr2.png">
+<meta property="og:image" content="http://yoursite.com/img/mysql-isolation/se1.png">
+<meta property="og:image" content="http://yoursite.com/img/mysql-isolation/se2.png">
+<meta property="og:updated_time" content="2016-12-18T14:19:20.040Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL隔离级别">
 <meta name="twitter:description" content="MySQL隔离级别
@@ -382,6 +386,24 @@
 <p><img src="/img/mysql-isolation/rc2.png" alt=""></p>
 <p><strong>结果分析</strong><br>事务1查询到id=2的数据为空，接着便插入了一条id=2的数据。此时事务1并未提交。<br>事务2读取id=2的数据，仍然为空。这是因为数据库隔离级别为Read-Committed，事务1未提交，事务2就读取事务1新添加的数据，此数据库隔离级别不允许脏读。<br>事务1能够读取到id=2的数据，因为在同一事务中，这是无锁的select请求。<br>事务2更新id=2的数据时失败，原因是事务1锁住了id=2的行数据。<br>事务1提交事务后，事务2进行更新id=2的数据时成功，原因是事务1提交后，占用的id=2的锁被释放了。事务2申请锁成功。  </p>
 <p>值得注意的是，RC的特点是事务与事务间的读操作隔离，事务1的读操作与事务2的读操作分离，直到某一事务提交后，其他事务又在这个时间点上进行事务隔离。它的优点是保证了不会脏读（读到不存在的数据），缺点是会出现同一事务两次读的结果不一致（如事务2），导致在这一事务内逻辑可能会错误。</p>
+<h2 id="Repeatable-Read"><a href="#Repeatable-Read" class="headerlink" title="Repeatable Read"></a>Repeatable Read</h2><hr>
+<p>数据库设置<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">set</span> @@global.tx_isolation = <span class="string">'repeatable-read'</span>;</div><div class="line"><span class="keyword">set</span> @@tx_isolation = <span class="string">'repeatable-read'</span>;</div></pre></td></tr></table></figure></p>
+<p><strong>客户端事件（时间顺序）</strong><br><img src="/img/mysql-isolation/rr1.png" alt=""></p>
+<p><strong>执行结果</strong></p>
+<p><img src="/img/mysql-isolation/rr2.png" alt=""></p>
+<p><strong>结果分析</strong></p>
+<p>事务1查询id=3的数据，结果为空。随后插入一条id=3的数据，成功。此时事务1申请并占有id=3的行锁。<br>事务2查询id=3的数据，结果为空。因为在RR隔离级别下，不会发生脏读，事务1修改数据未提交，事务2不可读取。<br>事务1查询id=3的数据，结果为事务1修改的数据。因为读同一事务下写操作修改过的行数据不会申请锁。<br>事务2更新id=3的数据，失败。原因是事务1占有锁未提交，锁未释放，事务2申请锁失败，排队等待。<br>事务1提交后，事务2查询id=3的数据，结果仍为空。因为在RR隔离级别下，同一事务多个读操作结果一致，保证了这个事务独立性（不被其他事务影响）。<br>事务2写id=3的数据，结果成功。因为事务1提交后释放id=3的行锁，事务2申请占用锁成功。<br>事务2读id=3的数据，结果读取到事务2刚刚更新到的数据。说明了可重复读可以保证多次读的结果唯一，除非在这个事务写成功后再执行读操作。这样才会影响读结果。  </p>
+<p>从执行结果来看，RR隔离级别可以防止在同一事务内读到不同的数据，它在读到的数据中加锁（记录锁），保证该事务内读到的数据相同。但若事务内对此条数据作了更新，则记录锁也随之更新。<br>RR隔离级别虽然能够防止不可重复读，但是并不能防止幻读（多次查询结果本应该不同，但结果相同）。</p>
+<h2 id="Serializable"><a href="#Serializable" class="headerlink" title="Serializable"></a>Serializable</h2><hr>
+<p>数据库设置<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">set</span> @@global.tx_isolation = <span class="string">'serializable'</span>;</div><div class="line"><span class="keyword">set</span> @@tx_isolation = <span class="string">'serializable'</span>;</div></pre></td></tr></table></figure></p>
+<p><strong>客户端事件（时间顺序）</strong></p>
+<p><img src="/img/mysql-isolation/se1.png" alt=""></p>
+<p><strong>执行结果</strong></p>
+<p><img src="/img/mysql-isolation/se2.png" alt=""></p>
+<p><strong>结果分析</strong></p>
+<p>事务1读id=4的数据，结果为空。随后插入一条id=4的数据，插入成功。<br>事务2读id=4的数据，等待超时。原因是在Serializable隔离等级下，读操作需要占用锁，而id=4的行锁被事务1占用了，因此读取失败。<br>事务1读id=4的数据，读取成功。因为在同一事务下，读取写过的行数据不需要占用锁。<br>事务2写id=4的数据，等待超市。原因是在Serializable隔离等级下，写操作同样需要占用锁，而id=4的行锁被事务1占用了，因此读取失败。<br>事务1提交后，事务2读id=4的数据成功，写id=4的数据成功。因为事务1提交后，占有id=4的行锁被释放，事务2得以占用成功。  </p>
+<p>上面的执行结果分析出Serializable的隔离级别要求读写均请求锁。这样保证了数据库事务串行执行，优点是能够防止脏读、不可重复读、幻读现象，但缺点也非常明显，串行执行事务与单线程相似，效率低、资源利用率低，在多事务同时到达数据库时往往会造成等待超时的现象。  </p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>数据库的隔离等级分四种，由低到高分别是Read Uncommitted（读未提交）、Read Committed（读提交）、Repeatable Read（可重复读）和Serializable（可串行）。通常我们需要根据实际情况选择数据库隔离级别，这样不仅可以优化数据库对业务的支持，也可以降低死锁发生率。那今天就写到这里先吧～</p>
 
       
     </div>
@@ -603,7 +625,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL隔离级别"><span class="nav-number">1.</span> <span class="nav-text">MySQL隔离级别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据表准备"><span class="nav-number">1.1.</span> <span class="nav-text">数据表准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Read-Uncommitted"><span class="nav-number">1.2.</span> <span class="nav-text">Read Uncommitted</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Read-Committed"><span class="nav-number">1.3.</span> <span class="nav-text">Read Committed</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL隔离级别"><span class="nav-number">1.</span> <span class="nav-text">MySQL隔离级别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据表准备"><span class="nav-number">1.1.</span> <span class="nav-text">数据表准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Read-Uncommitted"><span class="nav-number">1.2.</span> <span class="nav-text">Read Uncommitted</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Read-Committed"><span class="nav-number">1.3.</span> <span class="nav-text">Read Committed</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Repeatable-Read"><span class="nav-number">1.4.</span> <span class="nav-text">Repeatable Read</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Serializable"><span class="nav-number">1.5.</span> <span class="nav-text">Serializable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.6.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
