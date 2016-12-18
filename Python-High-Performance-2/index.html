@@ -1,0 +1,750 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Python-Performance," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Python性能分析与优化（二） —— 优化每一个细节这一篇博客写的是Python性能分析与优化第四章的内容，讲述的是如何优化Python程序。这里涉及到一些Python数据结构的性能问题，以及一些常用的Python优化技巧。我以前也写过一些Python程序，但是因为没有关注性能这一块内容，导致程序运行缓慢。现在开始，我更关注如何优化Python程序，使得我的程序更优美！
+函数返回值缓存和函数查询">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python性能分析与优化（二） —— 优化每一个细节">
+<meta property="og:url" content="http://yoursite.com/Python-High-Performance-2/index.html">
+<meta property="og:site_name" content="米诺的博客">
+<meta property="og:description" content="Python性能分析与优化（二） —— 优化每一个细节这一篇博客写的是Python性能分析与优化第四章的内容，讲述的是如何优化Python程序。这里涉及到一些Python数据结构的性能问题，以及一些常用的Python优化技巧。我以前也写过一些Python程序，但是因为没有关注性能这一块内容，导致程序运行缓慢。现在开始，我更关注如何优化Python程序，使得我的程序更优美！
+函数返回值缓存和函数查询">
+<meta property="og:image" content="http://yoursite.com/img/python-high-performance/details/memoization-res.png">
+<meta property="og:image" content="http://yoursite.com/img/python-high-performance/details/default-argument-res.png">
+<meta property="og:image" content="http://yoursite.com/img/python-high-performance/details/list-generator-res.png">
+<meta property="og:updated_time" content="2016-10-21T07:41:49.353Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python性能分析与优化（二） —— 优化每一个细节">
+<meta name="twitter:description" content="Python性能分析与优化（二） —— 优化每一个细节这一篇博客写的是Python性能分析与优化第四章的内容，讲述的是如何优化Python程序。这里涉及到一些Python数据结构的性能问题，以及一些常用的Python优化技巧。我以前也写过一些Python程序，但是因为没有关注性能这一块内容，导致程序运行缓慢。现在开始，我更关注如何优化Python程序，使得我的程序更优美！
+函数返回值缓存和函数查询">
+<meta name="twitter:image" content="http://yoursite.com/img/python-high-performance/details/memoization-res.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6313394359244948000,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/Python-High-Performance-2/"/>
+
+  <title> Python性能分析与优化（二） —— 优化每一个细节 | 米诺的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">米诺的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">千里之行，始于足下</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Python性能分析与优化（二） —— 优化每一个细节
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-21T12:29:21+08:00" content="2016-10-21">
+              2016-10-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Tech/" itemprop="url" rel="index">
+                    <span itemprop="name">Tech</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Tech/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/Python-High-Performance-2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="Python-High-Performance-2/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Python性能分析与优化（二）-——-优化每一个细节"><a href="#Python性能分析与优化（二）-——-优化每一个细节" class="headerlink" title="Python性能分析与优化（二） —— 优化每一个细节"></a>Python性能分析与优化（二） —— 优化每一个细节</h1><p>这一篇博客写的是Python性能分析与优化第四章的内容，讲述的是如何优化Python程序。这里涉及到一些Python数据结构的性能问题，以及一些常用的Python优化技巧。我以前也写过一些Python程序，但是因为没有关注性能这一块内容，导致程序运行缓慢。现在开始，我更关注如何优化Python程序，使得我的程序更优美！</p>
+<h2 id="函数返回值缓存和函数查询表"><a href="#函数返回值缓存和函数查询表" class="headerlink" title="函数返回值缓存和函数查询表"></a>函数返回值缓存和函数查询表</h2><p>顾名思义，函数返回值缓存和函数查询表就是利用空间换时间的策略，将程序运行时间大大缩短。三角函数的实现就是用到了函数返回值的缓存，利用空间换时间的策略达到快速返回三角函数值的效果。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Memoized</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, fn)</span>:</span></div><div class="line">        self.fn = fn;</div><div class="line">        self.results = &#123;&#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, *args)</span>:</span></div><div class="line">        key = <span class="string">''</span>.join(map(str, args[<span class="number">0</span>]))</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            <span class="keyword">return</span> self.results[key]</div><div class="line">        <span class="keyword">except</span> KeyError:</div><div class="line">            self.results[key] = self.fn(*args)</div><div class="line">            <span class="keyword">return</span> self.results[key]</div><div class="line"></div><div class="line"><span class="meta">@Memoized</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">twoParamsMemoized</span><span class="params">(values, period)</span>:</span></div><div class="line">    totalSum = <span class="number">0</span></div><div class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">100</span>):</div><div class="line">        <span class="keyword">for</span> v <span class="keyword">in</span> values:</div><div class="line">            totalSum = math.pow((math.sqrt(v)*period), <span class="number">4</span>) + totalSum</div><div class="line">    <span class="keyword">return</span> totalSum</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">twoParams</span><span class="params">(values, period)</span>:</span></div><div class="line">    totalSum = <span class="number">0</span></div><div class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">100</span>):</div><div class="line">        <span class="keyword">for</span> v <span class="keyword">in</span> values:</div><div class="line">            totalSum = math.pow((math.sqrt(v)*period), <span class="number">4</span>) + totalSum</div><div class="line">    <span class="keyword">return</span> totalSum</div></pre></td></tr></table></figure>
+<p>该函数的运行结果如下图所示：</p>
+<p><img src="/img/python-high-performance/details/memoization-res.png" alt=""></p>
+<p>当然了，上面的缓存用的是字典的键，根据实际情况，还可以用列表、链表、树做查询表。</p>
+<p>从上面的结果看出，用固定参数+缓存数据的效果是最佳的，因为缓存数据就相当于第二次调用参数申明的数据，重复调用后，可以通过key-value的方法快速查找到对于的value，而随机参数+缓存数据的结果与其他两个结果是相差不大的，说明缓存的数据因为随机参数的原因没有调用到原来的key-value对，而是再次添加了随机的key-value对，增加了计算时间。</p>
+<p>对于内存足够的机器（尤其是服务器），查询表的作用可见一斑。</p>
+<h2 id="使用默认参数"><a href="#使用默认参数" class="headerlink" title="使用默认参数"></a>使用默认参数</h2><p>许多编程语言都会具有默认参数的定义，在python中，默认参数作为优化技术的一种，使用得并不十分普遍。</p>
+<p>默认参数是直接优化Python解释器的工作方式，它可以在函数创建时就确定输入值，而不用在运行阶段才确定输入。</p>
+<p>下面是默认参数的代码：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># original function</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">degree_sin</span><span class="params">(deg)</span>:</span></div><div class="line">    <span class="keyword">return</span> math.sin(deg * math.pi / <span class="number">180.0</span>)</div><div class="line"></div><div class="line"><span class="comment"># optimized function</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">degree_sin_opt</span><span class="params">(deg, factor = math.pi/<span class="number">180.0</span>, sin = math.sin)</span>:</span></div><div class="line">    <span class="keyword">return</span> sin(factor * deg)</div></pre></td></tr></table></figure>
+<p>对应的输出结果如下图所示：</p>
+<p><img src="/img/python-high-performance/details/default-argument-res.png" alt=""></p>
+<p>利用解释器的原理，在函数创建时就确定输入值，固然可以提高程序运行速度。但是这也破坏了程序的可读性，我认为这个优化方法并不一定可取。</p>
+<h2 id="使用列表表达式"><a href="#使用列表表达式" class="headerlink" title="使用列表表达式"></a>使用列表表达式</h2><p>python语言中有列表这一数据结构，它同时也包含了列表表达式的语法，比如”[x for x in range(100)]”。在python中，我们应该多用列表表达式来创建列表，而不是用循环的方式。这是因为使用列表表达式所花费的指令数量比for循环的指令数量要少。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">loop</span><span class="params">()</span>:</span></div><div class="line">    multiples_of_two = []</div><div class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">100</span>):</div><div class="line">        <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>:</div><div class="line">           multiples_of_two.append(x)</div><div class="line">    <span class="keyword">return</span> multiples_of_two       </div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">generator</span><span class="params">()</span>:</span></div><div class="line">    multiples_of_two = [x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">100</span>) <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>]</div><div class="line">    <span class="keyword">return</span> multiples_of_two</div></pre></td></tr></table></figure>
+<p>结果如下图所示：</p>
+<p><img src="/img/python-high-performance/details/list-generator-res.png" alt=""></p>
+<p>从上面的结果看出列表表达式的效率更高，但是在列表过大时，列表表达式可能就不太好使了。因为列表表达式需要直接产生每一个值，因此如果你要处理一个包含10万个元素的列表时，你可以用生成器表达式，不需要直接返回列表，而是返回一个生成器对象。当你请求列表元素是，生成器表达式就会为你动态的生成列表元素。</p>
+<p>生成器就像这样“(2+x for x in range 100)”。生成器无法使用方括号来读写数据，只能通过遍历生成器对象获得列表，如“for number in my_list: print number”</p>
+<h2 id="其他优化技巧"><a href="#其他优化技巧" class="headerlink" title="其他优化技巧"></a>其他优化技巧</h2><ul>
+<li><p><strong>尽量使用join函数链接字符串，而不是用+=操作符，因为这样做不仅消耗的时间更短，而且占用的内存也更少</strong></p>
+</li>
+<li><p>有时不定义函数更好，因为调用函数会增加大量的资源消耗，而因此在不需要更改的模块（固定的模块）可以使用一个函数完成，而不要嵌套多个函数完成。虽然这样会破坏可读性，但是对程序来说会比较高效。</p>
+</li>
+<li><p>灵活使用数据结构，尽量用python标准库内的核心组件，因为他们都是经过优化的C语言写成的，因此效率更佳。</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python-Performance/" rel="tag">#Python-Performance</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Python-High-Performance-1/" rel="next" title="Python性能分析与优化（一） —— 性能分析器">
+                <i class="fa fa-chevron-left"></i> Python性能分析与优化（一） —— 性能分析器
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/mysql-isolation/" rel="prev" title="MySQL隔离级别">
+                MySQL隔离级别 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="Python-High-Performance-2/"
+     data-title="Python性能分析与优化（二） —— 优化每一个细节"
+     data-content=""
+     data-url="http://yoursite.com/Python-High-Performance-2/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="Python-High-Performance-2/"
+           data-title="Python性能分析与优化（二） —— 优化每一个细节" data-url="http://yoursite.com/Python-High-Performance-2/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/avatar.jpg"
+               alt="Mino Gump" />
+          <p class="site-author-name" itemprop="name">Mino Gump</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/blogmrg" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zh-cn.facebook.com/people/%E7%94%98%E9%93%AD%E4%B9%90/100011770406458" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/MinoGump" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://leetcode.com/" title="LeetCode" target="_blank">LeetCode</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://stackoverflow.com/" title="stack overflow" target="_blank">stack overflow</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python性能分析与优化（二）-——-优化每一个细节"><span class="nav-number">1.</span> <span class="nav-text">Python性能分析与优化（二） —— 优化每一个细节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#函数返回值缓存和函数查询表"><span class="nav-number">1.1.</span> <span class="nav-text">函数返回值缓存和函数查询表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用默认参数"><span class="nav-number">1.2.</span> <span class="nav-text">使用默认参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用列表表达式"><span class="nav-number">1.3.</span> <span class="nav-text">使用列表表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他优化技巧"><span class="nav-number">1.4.</span> <span class="nav-text">其他优化技巧</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mino Gump</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"minogump"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>
