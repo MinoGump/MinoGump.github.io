@@ -18,6 +18,8 @@
 
 
 
+  <meta name="google-site-verification" content="NcLNzRKJ5P1CFqevhStxjWSkS2GbkggihFH69NEnbjo" />
+
 
 
 
@@ -109,7 +111,7 @@
 <meta property="og:image" content="http://yoursite.com/img/mysql-isolation/rr2.png">
 <meta property="og:image" content="http://yoursite.com/img/mysql-isolation/se1.png">
 <meta property="og:image" content="http://yoursite.com/img/mysql-isolation/se2.png">
-<meta property="og:updated_time" content="2016-12-18T14:19:20.040Z">
+<meta property="og:updated_time" content="2016-12-24T08:12:27.954Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL隔离级别">
 <meta name="twitter:description" content="MySQL隔离级别
@@ -366,7 +368,8 @@
 <p><img src="/img/mysql-isolation/default-iso.png" alt=""></p>
 <h2 id="数据表准备"><a href="#数据表准备" class="headerlink" title="数据表准备"></a>数据表准备</h2><hr>
 <p>我们在MySQL中新建了四个表。</p>
-<p>对于test_1表，由id、name两个字段组成，其中id为主键。<br>对于test_2表，由id、name两个字段组成，其中id为主键，name为唯一索引。<br>对于test_3表，由id、name两个字段组成，没有索引。<br>对于test_4表，由id、name两个字段组成，其中name为主键，id为唯一索引。</p>
+<p>对于test_1表，由id、name两个字段组成，其中id为主键。<br>对于test_2表，由id、name两个字段组成，其中id为主键，name为唯一索引。<br>对于test_3表，由id、name两个字段组成，没有索引。<br>对于test_4表，由id、name两个字段组成，其中id为主键，name为普通索引。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> test_1 (</div><div class="line">    <span class="keyword">id</span> <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</div><div class="line">    <span class="keyword">name</span> <span class="built_in">VARCHAR</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line">    PRIMARY <span class="keyword">KEY</span> (<span class="keyword">id</span>),</div><div class="line">    <span class="keyword">UNIQUE</span> (<span class="keyword">name</span>)</div><div class="line">);</div></pre></td></tr></table></figure>
 <p>在数据库隔离级别中，我们只用test_1表。在死锁学习中，我们才会用到其它表。</p>
 <p><strong>设置autocommit为False。</strong></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">set</span> @@autocommit = <span class="number">0</span>;</div></pre></td></tr></table></figure>
