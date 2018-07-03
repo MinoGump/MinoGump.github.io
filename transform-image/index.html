@@ -86,22 +86,14 @@
 
 
 
-<meta name="description" content="360全景图像通过物理设备可以拍摄到360图像，比如下图的设备就是通过前后镜头捕捉到两个鱼眼图，再通过转换得到360图像。
-
-用物理设备拍摄到的360全景图片后，以什么形式数字化储存呢？一个是鱼眼图，一个是等距圆柱投影（Equirectangular），一种是CubeMap正方体投影，还有一种是金字塔投影（Pyramid Projection）。
-鱼眼图鱼眼图是我们经常见到的一种投影图像。
-
-它实">
+<meta name="description" content="360全景图像通过物理设备可以拍摄到360图像，比如下图的设备就是通过前后镜头捕捉到两个鱼眼图，再通过转换得到360图像。  用物理设备拍摄到的360全景图片后，以什么形式数字化储存呢？一个是鱼眼图，一个是等距圆柱投影（Equirectangular），一种是CubeMap正方体投影，还有一种是金字塔投影（Pyramid Projection）。 鱼眼图鱼眼图是我们经常见到的一种投影图像。  它实">
+<meta name="keywords" content="Digital Image Process">
 <meta property="og:type" content="article">
 <meta property="og:title" content="360立体图像的转换">
 <meta property="og:url" content="http://yoursite.com/transform-image/index.html">
 <meta property="og:site_name" content="米诺的博客">
-<meta property="og:description" content="360全景图像通过物理设备可以拍摄到360图像，比如下图的设备就是通过前后镜头捕捉到两个鱼眼图，再通过转换得到360图像。
-
-用物理设备拍摄到的360全景图片后，以什么形式数字化储存呢？一个是鱼眼图，一个是等距圆柱投影（Equirectangular），一种是CubeMap正方体投影，还有一种是金字塔投影（Pyramid Projection）。
-鱼眼图鱼眼图是我们经常见到的一种投影图像。
-
-它实">
+<meta property="og:description" content="360全景图像通过物理设备可以拍摄到360图像，比如下图的设备就是通过前后镜头捕捉到两个鱼眼图，再通过转换得到360图像。  用物理设备拍摄到的360全景图片后，以什么形式数字化储存呢？一个是鱼眼图，一个是等距圆柱投影（Equirectangular），一种是CubeMap正方体投影，还有一种是金字塔投影（Pyramid Projection）。 鱼眼图鱼眼图是我们经常见到的一种投影图像。  它实">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/img/transform-image/theta_s.png">
 <meta property="og:image" content="http://yoursite.com/img/transform-image/fisheye.jpg">
 <meta property="og:image" content="http://yoursite.com/img/transform-image/equirectangular.jpg">
@@ -109,12 +101,7 @@
 <meta property="og:updated_time" content="2016-08-06T12:40:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="360立体图像的转换">
-<meta name="twitter:description" content="360全景图像通过物理设备可以拍摄到360图像，比如下图的设备就是通过前后镜头捕捉到两个鱼眼图，再通过转换得到360图像。
-
-用物理设备拍摄到的360全景图片后，以什么形式数字化储存呢？一个是鱼眼图，一个是等距圆柱投影（Equirectangular），一种是CubeMap正方体投影，还有一种是金字塔投影（Pyramid Projection）。
-鱼眼图鱼眼图是我们经常见到的一种投影图像。
-
-它实">
+<meta name="twitter:description" content="360全景图像通过物理设备可以拍摄到360图像，比如下图的设备就是通过前后镜头捕捉到两个鱼眼图，再通过转换得到360图像。  用物理设备拍摄到的360全景图片后，以什么形式数字化储存呢？一个是鱼眼图，一个是等距圆柱投影（Equirectangular），一种是CubeMap正方体投影，还有一种是金字塔投影（Pyramid Projection）。 鱼眼图鱼眼图是我们经常见到的一种投影图像。  它实">
 <meta name="twitter:image" content="http://yoursite.com/img/transform-image/theta_s.png">
 
 
@@ -358,13 +345,13 @@
 <h1 id="CubeMap"><a href="#CubeMap" class="headerlink" title="CubeMap"></a>CubeMap</h1><p>CubeMap是立方体投影，它用到了球体到内切立方体的投影技术。</p>
 <p><img src="/img/transform-image/cubemap.jpg" alt=""></p>
 <h1 id="鱼眼图转换为等距圆柱投影"><a href="#鱼眼图转换为等距圆柱投影" class="headerlink" title="鱼眼图转换为等距圆柱投影"></a>鱼眼图转换为等距圆柱投影</h1><p>主要的思想是通过输出图像等距圆柱投影图像的坐标xy计算对应的三维空间的坐标，再求出对应鱼眼图的xy坐标进行赋值。</p>
-<p>代码见<a href="https://github.com/MinoGump/360ImageTransform/blob/master/src/com/creative/transform/Fisheye.java" target="_blank" rel="external">GitHub</a></p>
+<p>代码见<a href="https://github.com/MinoGump/360ImageTransform/blob/master/src/com/creative/transform/Fisheye.java" target="_blank" rel="noopener">GitHub</a></p>
 <h1 id="等距圆柱投影转换为CubeMap"><a href="#等距圆柱投影转换为CubeMap" class="headerlink" title="等距圆柱投影转换为CubeMap"></a>等距圆柱投影转换为CubeMap</h1><p>主要的思想是通过输出的CubeMap图像判断是六个面中的哪一个面，根据判断得出的方向获得三维空间内球体上的坐标，再对应到等距圆柱图像上。</p>
-<p>代码见<a href="https://github.com/MinoGump/360ImageTransform/blob/master/src/com/creative/transform/Equirectangular.java" target="_blank" rel="external">GitHub</a></p>
+<p>代码见<a href="https://github.com/MinoGump/360ImageTransform/blob/master/src/com/creative/transform/Equirectangular.java" target="_blank" rel="noopener">GitHub</a></p>
 <h1 id="CubeMap转换为鱼眼图"><a href="#CubeMap转换为鱼眼图" class="headerlink" title="CubeMap转换为鱼眼图"></a>CubeMap转换为鱼眼图</h1><p>主要的思想是利用鱼眼图的坐标计算得到三维空间中球体的坐标，再对应到内切正方体内的坐标就是对应的CubeMap坐标，赋像素值即可。</p>
-<p>代码见<a href="https://github.com/MinoGump/360ImageTransform/blob/master/src/com/creative/transform/Cubemap.java" target="_blank" rel="external">GitHub</a></p>
+<p>代码见<a href="https://github.com/MinoGump/360ImageTransform/blob/master/src/com/creative/transform/Cubemap.java" target="_blank" rel="noopener">GitHub</a></p>
 <h1 id="Pyramid-Projection"><a href="#Pyramid-Projection" class="headerlink" title="Pyramid Projection"></a>Pyramid Projection</h1><p>金字塔投影是Facebook研究出的新型投影方式，它能够减少图像存储的空间（减少重复的像素点），facebook的360视频就是用这种投影方式在服务器上存储视频的。</p>
-<p><a href="https://code.facebook.com/posts/1126354007399553/next-generation-video-encoding-techniques-for-360-video-and-vr/" target="_blank" rel="external">Facebook金字塔投影</a></p>
+<p><a href="https://code.facebook.com/posts/1126354007399553/next-generation-video-encoding-techniques-for-360-video-and-vr/" target="_blank" rel="noopener">Facebook金字塔投影</a></p>
 
       
     </div>
@@ -497,7 +484,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -505,7 +492,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -514,7 +501,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -609,7 +596,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

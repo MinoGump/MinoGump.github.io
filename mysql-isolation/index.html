@@ -86,22 +86,14 @@
 
 
 
-<meta name="description" content="MySQL隔离级别
-数据库隔离级别有四种，由高到低分别是 Serializable（可串行）, Repeatable Read（可重复读）, Read Committed（读提交内容）, Read Uncommitted（读未提交内容）。一般的数据库默认隔离级别为RC，而MySQL默认的隔离级别为RR。
-
-数据表准备
-我们在MySQL中新建了四个表。
-对于test_1表，由id、name两个字段组">
+<meta name="description" content="MySQL隔离级别 数据库隔离级别有四种，由高到低分别是 Serializable（可串行）, Repeatable Read（可重复读）, Read Committed（读提交内容）, Read Uncommitted（读未提交内容）。一般的数据库默认隔离级别为RC，而MySQL默认的隔离级别为RR。  数据表准备 我们在MySQL中新建了四个表。 对于test_1表，由id、name两个字段组">
+<meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL隔离级别">
 <meta property="og:url" content="http://yoursite.com/mysql-isolation/index.html">
 <meta property="og:site_name" content="米诺的博客">
-<meta property="og:description" content="MySQL隔离级别
-数据库隔离级别有四种，由高到低分别是 Serializable（可串行）, Repeatable Read（可重复读）, Read Committed（读提交内容）, Read Uncommitted（读未提交内容）。一般的数据库默认隔离级别为RC，而MySQL默认的隔离级别为RR。
-
-数据表准备
-我们在MySQL中新建了四个表。
-对于test_1表，由id、name两个字段组">
+<meta property="og:description" content="MySQL隔离级别 数据库隔离级别有四种，由高到低分别是 Serializable（可串行）, Repeatable Read（可重复读）, Read Committed（读提交内容）, Read Uncommitted（读未提交内容）。一般的数据库默认隔离级别为RC，而MySQL默认的隔离级别为RR。  数据表准备 我们在MySQL中新建了四个表。 对于test_1表，由id、name两个字段组">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/img/mysql-isolation/default-iso.png">
 <meta property="og:image" content="http://yoursite.com/img/mysql-isolation/ru1.png">
 <meta property="og:image" content="http://yoursite.com/img/mysql-isolation/ru2.png">
@@ -111,15 +103,10 @@
 <meta property="og:image" content="http://yoursite.com/img/mysql-isolation/rr2.png">
 <meta property="og:image" content="http://yoursite.com/img/mysql-isolation/se1.png">
 <meta property="og:image" content="http://yoursite.com/img/mysql-isolation/se2.png">
-<meta property="og:updated_time" content="2016-12-24T08:12:27.954Z">
+<meta property="og:updated_time" content="2016-12-24T08:12:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL隔离级别">
-<meta name="twitter:description" content="MySQL隔离级别
-数据库隔离级别有四种，由高到低分别是 Serializable（可串行）, Repeatable Read（可重复读）, Read Committed（读提交内容）, Read Uncommitted（读未提交内容）。一般的数据库默认隔离级别为RC，而MySQL默认的隔离级别为RR。
-
-数据表准备
-我们在MySQL中新建了四个表。
-对于test_1表，由id、name两个字段组">
+<meta name="twitter:description" content="MySQL隔离级别 数据库隔离级别有四种，由高到低分别是 Serializable（可串行）, Repeatable Read（可重复读）, Read Committed（读提交内容）, Read Uncommitted（读未提交内容）。一般的数据库默认隔离级别为RC，而MySQL默认的隔离级别为RR。  数据表准备 我们在MySQL中新建了四个表。 对于test_1表，由id、name两个字段组">
 <meta name="twitter:image" content="http://yoursite.com/img/mysql-isolation/default-iso.png">
 
 
@@ -369,12 +356,12 @@
 <h2 id="数据表准备"><a href="#数据表准备" class="headerlink" title="数据表准备"></a>数据表准备</h2><hr>
 <p>我们在MySQL中新建了四个表。</p>
 <p>对于test_1表，由id、name两个字段组成，其中id为主键。<br>对于test_2表，由id、name两个字段组成，其中id为主键，name为唯一索引。<br>对于test_3表，由id、name两个字段组成，没有索引。<br>对于test_4表，由id、name两个字段组成，其中id为主键，name为普通索引。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> test_1 (</div><div class="line">    <span class="keyword">id</span> <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</div><div class="line">    <span class="keyword">name</span> <span class="built_in">VARCHAR</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line">    PRIMARY <span class="keyword">KEY</span> (<span class="keyword">id</span>),</div><div class="line">    <span class="keyword">UNIQUE</span> (<span class="keyword">name</span>)</div><div class="line">);</div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> test_1 (</span><br><span class="line">    <span class="keyword">id</span> <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">    <span class="keyword">name</span> <span class="built_in">VARCHAR</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    PRIMARY <span class="keyword">KEY</span> (<span class="keyword">id</span>),</span><br><span class="line">    <span class="keyword">UNIQUE</span> (<span class="keyword">name</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 <p>在数据库隔离级别中，我们只用test_1表。在死锁学习中，我们才会用到其它表。</p>
 <p><strong>设置autocommit为False。</strong></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">set</span> @@autocommit = <span class="number">0</span>;</div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> @@autocommit = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
 <h2 id="Read-Uncommitted"><a href="#Read-Uncommitted" class="headerlink" title="Read Uncommitted"></a>Read Uncommitted</h2><hr>
-<p>数据库隔离级别设置<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">set @@global.tx_isolation = 'read-uncommitted';    #全局隔离级别</div><div class="line">set @@tx_isolation = 'read-uncommitted';    #当前会话隔离级别</div></pre></td></tr></table></figure></p>
+<p>数据库隔离级别设置<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set @@global.tx_isolation = 'read-uncommitted';    #全局隔离级别</span><br><span class="line">set @@tx_isolation = 'read-uncommitted';    #当前会话隔离级别</span><br></pre></td></tr></table></figure></p>
 <p><strong>客户端事件（时间顺序）</strong></p>
 <p><img src="/img/mysql-isolation/ru1.png" alt=""></p>
 <p><strong>执行结果</strong></p>
@@ -382,7 +369,7 @@
 <p><strong>结果分析</strong><br>事务1查询到id=1的数据为空，接着便插入了一条id为1的数据。此时事务1并未提交，而事务2读取id为1的数据，可以读到未提交的数据。<br>若事务1回滚，则事务2读到的数据就是一条不存在的数据，也就是脏数据，称之为脏读。<br>第四步事务1再次读取id=1的数据，这次在事务1未提交的情况下也能查询得到，是因为InnoDB在默认情况下会给insert语句上X锁（排他锁），而X锁对同一事务内的无锁select请求兼容。<br>第五步事务2写id=1的数据，此时由于事务1未提交，事务1中id=1的行锁未释放，导致事务2中的锁请求等待超时。<br>若占有锁的事务1提交了，锁随即被释放。未占有锁的事务2可以申请id=1的行锁了，数据被更新。  </p>
 <p>值得注意的是，RU的特点是读不申请锁。能够在其他事务未提交的情况下读取到未提交的数据，它的优点是能够最快的读取到有可能准确的数据，它的缺点是数据准确性不大，很有可能读到的这条数据不存在。</p>
 <h2 id="Read-Committed"><a href="#Read-Committed" class="headerlink" title="Read Committed"></a>Read Committed</h2><hr>
-<p>数据库隔离级别设置<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">set @@global.tx_isolation = 'read-committed';   #全局隔离级别</div><div class="line">set @@tx_isolation = 'read-committed';      #当前会话隔离级别</div></pre></td></tr></table></figure></p>
+<p>数据库隔离级别设置<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set @@global.tx_isolation = 'read-committed';   #全局隔离级别</span><br><span class="line">set @@tx_isolation = 'read-committed';      #当前会话隔离级别</span><br></pre></td></tr></table></figure></p>
 <p><strong>客户端事件（时间顺序）</strong></p>
 <p><img src="/img/mysql-isolation/rc1.png" alt=""></p>
 <p><strong>执行结果</strong></p>
@@ -390,7 +377,7 @@
 <p><strong>结果分析</strong><br>事务1查询到id=2的数据为空，接着便插入了一条id=2的数据。此时事务1并未提交。<br>事务2读取id=2的数据，仍然为空。这是因为数据库隔离级别为Read-Committed，事务1未提交，事务2就读取事务1新添加的数据，此数据库隔离级别不允许脏读。<br>事务1能够读取到id=2的数据，因为在同一事务中，这是无锁的select请求。<br>事务2更新id=2的数据时失败，原因是事务1锁住了id=2的行数据。<br>事务1提交事务后，事务2进行更新id=2的数据时成功，原因是事务1提交后，占用的id=2的锁被释放了。事务2申请锁成功。  </p>
 <p>值得注意的是，RC的特点是事务与事务间的读操作隔离，事务1的读操作与事务2的读操作分离，直到某一事务提交后，其他事务又在这个时间点上进行事务隔离。它的优点是保证了不会脏读（读到不存在的数据），缺点是会出现同一事务两次读的结果不一致（如事务2），导致在这一事务内逻辑可能会错误。</p>
 <h2 id="Repeatable-Read"><a href="#Repeatable-Read" class="headerlink" title="Repeatable Read"></a>Repeatable Read</h2><hr>
-<p>数据库设置<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">set</span> @@global.tx_isolation = <span class="string">'repeatable-read'</span>;</div><div class="line"><span class="keyword">set</span> @@tx_isolation = <span class="string">'repeatable-read'</span>;</div></pre></td></tr></table></figure></p>
+<p>数据库设置<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> @@global.tx_isolation = <span class="string">'repeatable-read'</span>;</span><br><span class="line"><span class="keyword">set</span> @@tx_isolation = <span class="string">'repeatable-read'</span>;</span><br></pre></td></tr></table></figure></p>
 <p><strong>客户端事件（时间顺序）</strong><br><img src="/img/mysql-isolation/rr1.png" alt=""></p>
 <p><strong>执行结果</strong></p>
 <p><img src="/img/mysql-isolation/rr2.png" alt=""></p>
@@ -398,7 +385,7 @@
 <p>事务1查询id=3的数据，结果为空。随后插入一条id=3的数据，成功。此时事务1申请并占有id=3的行锁。<br>事务2查询id=3的数据，结果为空。因为在RR隔离级别下，不会发生脏读，事务1修改数据未提交，事务2不可读取。<br>事务1查询id=3的数据，结果为事务1修改的数据。因为读同一事务下写操作修改过的行数据不会申请锁。<br>事务2更新id=3的数据，失败。原因是事务1占有锁未提交，锁未释放，事务2申请锁失败，排队等待。<br>事务1提交后，事务2查询id=3的数据，结果仍为空。因为在RR隔离级别下，同一事务多个读操作结果一致，保证了这个事务独立性（不被其他事务影响）。<br>事务2写id=3的数据，结果成功。因为事务1提交后释放id=3的行锁，事务2申请占用锁成功。<br>事务2读id=3的数据，结果读取到事务2刚刚更新到的数据。说明了可重复读可以保证多次读的结果唯一，除非在这个事务写成功后再执行读操作。这样才会影响读结果。  </p>
 <p>从执行结果来看，RR隔离级别可以防止在同一事务内读到不同的数据，它在读到的数据中加锁（记录锁），保证该事务内读到的数据相同。但若事务内对此条数据作了更新，则记录锁也随之更新。<br>RR隔离级别虽然能够防止不可重复读，但是并不能防止幻读（多次查询结果本应该不同，但结果相同）。</p>
 <h2 id="Serializable"><a href="#Serializable" class="headerlink" title="Serializable"></a>Serializable</h2><hr>
-<p>数据库设置<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">set</span> @@global.tx_isolation = <span class="string">'serializable'</span>;</div><div class="line"><span class="keyword">set</span> @@tx_isolation = <span class="string">'serializable'</span>;</div></pre></td></tr></table></figure></p>
+<p>数据库设置<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> @@global.tx_isolation = <span class="string">'serializable'</span>;</span><br><span class="line"><span class="keyword">set</span> @@tx_isolation = <span class="string">'serializable'</span>;</span><br></pre></td></tr></table></figure></p>
 <p><strong>客户端事件（时间顺序）</strong></p>
 <p><img src="/img/mysql-isolation/se1.png" alt=""></p>
 <p><strong>执行结果</strong></p>
@@ -445,6 +432,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/algorithm-main-element-of-array-1/" rel="prev" title="主元素1">
+                主元素1 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -535,7 +526,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -543,7 +534,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -552,7 +543,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -647,7 +638,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

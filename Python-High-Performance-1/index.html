@@ -86,14 +86,14 @@
 
 
 
-<meta name="description" content="Python性能分析与优化（一） —— 性能分析器今天读了Python性能分析与优化这本书大半了，开始写几篇博客，首先介绍一下这本书吧。Fernando Doglio写的这本书包含8个章节，其中第二章性能分析器介绍了几种关于Python性能分析的工具；第三章可视化分析数据介绍了几种GUI的性能分析工具；第四章优化细节介绍了一些优化性能的技巧。今天先从第二章开始吧。
-cProfilePython呢，">
+<meta name="description" content="Python性能分析与优化（一） —— 性能分析器今天读了Python性能分析与优化这本书大半了，开始写几篇博客，首先介绍一下这本书吧。Fernando Doglio写的这本书包含8个章节，其中第二章性能分析器介绍了几种关于Python性能分析的工具；第三章可视化分析数据介绍了几种GUI的性能分析工具；第四章优化细节介绍了一些优化性能的技巧。今天先从第二章开始吧。 cProfilePython呢，">
+<meta name="keywords" content="Perfiler">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python性能分析与优化（一） —— 性能分析器">
 <meta property="og:url" content="http://yoursite.com/Python-High-Performance-1/index.html">
 <meta property="og:site_name" content="米诺的博客">
-<meta property="og:description" content="Python性能分析与优化（一） —— 性能分析器今天读了Python性能分析与优化这本书大半了，开始写几篇博客，首先介绍一下这本书吧。Fernando Doglio写的这本书包含8个章节，其中第二章性能分析器介绍了几种关于Python性能分析的工具；第三章可视化分析数据介绍了几种GUI的性能分析工具；第四章优化细节介绍了一些优化性能的技巧。今天先从第二章开始吧。
-cProfilePython呢，">
+<meta property="og:description" content="Python性能分析与优化（一） —— 性能分析器今天读了Python性能分析与优化这本书大半了，开始写几篇博客，首先介绍一下这本书吧。Fernando Doglio写的这本书包含8个章节，其中第二章性能分析器介绍了几种关于Python性能分析的工具；第三章可视化分析数据介绍了几种GUI的性能分析工具；第四章优化细节介绍了一些优化性能的技巧。今天先从第二章开始吧。 cProfilePython呢，">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/img/python-high-performance/cProfile/testcProfile.png">
 <meta property="og:image" content="http://yoursite.com/img/python-high-performance/cProfile/testcProfile_res.png">
 <meta property="og:image" content="http://yoursite.com/img/python-high-performance/cProfile/testRecursion_0.png">
@@ -109,11 +109,10 @@ cProfilePython呢，">
 <meta property="og:image" content="http://yoursite.com/img/python-high-performance/line_profiler/testRecursion_res.png">
 <meta property="og:image" content="http://yoursite.com/img/python-high-performance/line_profiler/testIterator_0.png">
 <meta property="og:image" content="http://yoursite.com/img/python-high-performance/line_profiler/testIterator_res.png">
-<meta property="og:updated_time" content="2016-10-21T04:27:39.388Z">
+<meta property="og:updated_time" content="2016-10-21T04:27:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python性能分析与优化（一） —— 性能分析器">
-<meta name="twitter:description" content="Python性能分析与优化（一） —— 性能分析器今天读了Python性能分析与优化这本书大半了，开始写几篇博客，首先介绍一下这本书吧。Fernando Doglio写的这本书包含8个章节，其中第二章性能分析器介绍了几种关于Python性能分析的工具；第三章可视化分析数据介绍了几种GUI的性能分析工具；第四章优化细节介绍了一些优化性能的技巧。今天先从第二章开始吧。
-cProfilePython呢，">
+<meta name="twitter:description" content="Python性能分析与优化（一） —— 性能分析器今天读了Python性能分析与优化这本书大半了，开始写几篇博客，首先介绍一下这本书吧。Fernando Doglio写的这本书包含8个章节，其中第二章性能分析器介绍了几种关于Python性能分析的工具；第三章可视化分析数据介绍了几种GUI的性能分析工具；第四章优化细节介绍了一些优化性能的技巧。今天先从第二章开始吧。 cProfilePython呢，">
 <meta name="twitter:image" content="http://yoursite.com/img/python-high-performance/cProfile/testcProfile.png">
 
 
@@ -388,9 +387,9 @@ cProfilePython呢，">
 <p>但是其缺点是无法统计内存等情况，并且误差存在且不可忽视，因为cProfile统计时间利用的是系统内部的时钟，由于切换函数等，存在一定的滞后，所以误差不可避免。</p>
 <h2 id="line-profiler"><a href="#line-profiler" class="headerlink" title="line_profiler"></a>line_profiler</h2><p>接下来是一款逐行分析的性能分析器——line_profiler。它试图弥补cProfile和类似性能分析器的不足。其他性能分析器主要关注函数调用消耗的CPU时间。大多数情况下，这足以发现问题，消除瓶颈。但是，如果瓶颈问题出现在函数中的某一行，这是就需要line_profiler了。</p>
 <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>使用pip安装line_profiler：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install line_profiler</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install line_profiler</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>如果安装过程中出现问题，比如文件缺失，则可以安装如下依赖<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; sudo apt-get install python-dev libxml2-dev libxslt-dev</div><div class="line">&gt;</div></pre></td></tr></table></figure></p>
+<p>如果安装过程中出现问题，比如文件缺失，则可以安装如下依赖<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; sudo apt-get install python-dev libxml2-dev libxslt-dev</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
 </blockquote>
 <h3 id="斐波那契数列性能-1"><a href="#斐波那契数列性能-1" class="headerlink" title="斐波那契数列性能"></a>斐波那契数列性能</h3><p>下面用原来的代码继续分析斐波那契数列生成函数。这里的代码只需要更改一小部分的接口即可，其他的核心函数不用变。</p>
 <p><img src="/img/python-high-performance/line_profiler/testRecursion_0.png" alt=""></p>
@@ -532,7 +531,7 @@ cProfilePython呢，">
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -540,7 +539,7 @@ cProfilePython呢，">
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -549,7 +548,7 @@ cProfilePython呢，">
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -644,7 +643,7 @@ cProfilePython呢，">
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
